@@ -1,0 +1,54 @@
+// AMEX = 15 digits         && start with 34,37;
+// MASTER = 16 digits       && start with 51,52,53,54,55;
+// VISA = 13 - 16 digits    && start with 4;
+
+Verification process (check sum) :
+    part1 =
+        multiply every other digit by 2 starting with second to last digit
+        add multiplied PRODUCT's digits together (eg. 12 = 1 + 2)   = sum1
+    part2 =
+        sum numbers that were NOT multiplied in part1               = sum2
+        do: sum1 + sum2
+    part3 =
+        if (sum1 + sum2) % 10 = 0 --> then card is valid!
+/////////////////////////////////////////////////////////////////////////////////
+
+Take card number from the user and save into long = cardnumORIGINAL
+
+    long cardnum = cardnumORIGINAL / 10     // to eliminate the last number
+    long cardnum2 = cardnumORIGINAL         // save card num into variable to work out sum for the part2
+    bool isVisa(long cardnumORIGINAL), isMaster(long cardnumORIGINAL), isAmex(long cardnumORIGINAL);
+
+loop until cardnum = 0
+    {
+    digitselection = cardnum % 10           // save the next number into variable digitselection
+    digitselection = digitselection * 2     // multiply that number by 2
+
+        if (digitselection >9)
+        {
+              int digitsplit = digitselection % 10                      // if number > 9 --> save remainder into digitsplit
+              digitselection = digitselection / 10                      //  divide whole num by 10 to eliminate previous remainder and save the other num as digitselection
+              multipldigitsum = multipldigitsum + digitselection + digitsplit         // sum saved numbers and add to the numbers already saved
+        }
+    cardnum = cardnum / 10                  // eliminate another odd number
+    }
+
+loop until cardnum2 = 0
+    {
+        digitselection = cardnum2 % 10                                  // save remainder into a variable digitselection
+        singledigitsum = singledigitsum + digitselection                // sum saved number + numbers already saved
+        cardnum2 = cardnum / 10                                         // skip a number that was used in part1
+    }
+
+int totalsum = singledigitsum + multipldigitsum
+int isValid = totalsum % 10
+
+
+
+if(isValid != 0)
+{
+    printf("INVALID\n")
+} else if
+    {
+
+    }

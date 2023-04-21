@@ -1,0 +1,14 @@
+sort1 uses: Bubble sort
+
+How do you know?: Best processing time of all 3 algorithms when dealing with an array consisting of large amount of sorted numbers as the algorithm needed to make one passage only.
+                  When dealing with the shorter array, the difference was negligible but the list of 50000 numbers made this algorithm stand out especially against a selection sort algorithm.
+
+sort2 uses: Merge sort
+
+How do you know?: Dramatically better processing time compared to the other 2 algorithms when processing random and reversed array with large amount of numbers.
+
+sort3 uses: Selection sort
+
+How do you know?: Stil somewhat very consistent result when dealing with an array of any lenght (compared to other algorithms processing the same array)
+                  No matter how the array was sorted (sorted, reversed and random provided very similar results implying that the algorithm had to check n amount of numbers n amount of times
+                  everytime regardless of the array being in any particular order or not which is typical for selection sort)

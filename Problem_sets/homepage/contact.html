@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta name="viewport" content="initial-scale=1, width=device-width">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link href="styles.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sen&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+<title>Daniel's Webpage</title>
+</head>
+<body>
+    <div class="outer_container">
+            <header class="collapse show" id="head">
+                <h1 class="name">Daniel V.</h1>
+                <ul class="top_nav">
+                    <li><button type="button" onclick="location.href='index.html'" class="top_button">Homepage</button></li>
+                    <li><button type="button" onclick="location.href='interests.html'" class="top_button">Interests</button></li>
+                    <li><button onclick="location.href='gallery.html'" class="top_button">Gallery</button></li>
+                    <li><button onclick="location.href='contact.html'" class="top_button">Contact</button></li>
+                </ul>
+            </header>
+            <button id="hide" onclick="changeSign()" type="button" data-bs-toggle="collapse" data-bs-target="#head" aria-expanded="true" aria-controls="head">˄</button>
+            <script>
+                function changeSign(){
+                    if (document.getElementById("hide").innerHTML == "˄")
+                    {
+                        document.getElementById("hide").innerHTML = "˅"
+                    }
+                    else
+                    {
+                        document.getElementById("hide").innerHTML = "˄"
+                    }
+            }
+            </script>
+
+        <div class="inner_container">
+            <article class="text">
+                <h2 class="title">Contact</h2>
+                <p class="p_topspace">I don't really use social media, but if you wish to get in touch,
+                    feel free to send me a message on facebook. </p>
+                <div class="socials">
+                    <a href="https://www.facebook.com/daniel.valasek.7" target="blank"><img class="img-fluid" id="fb" src="./images/facebook.png" alt="facebook.com"></a>
+                    <a href="https://www.instagram.com/dannythepianist" target="blank"><img class="img-fluid" id="ig" src="./images/instagram.png" alt="instagram.com"></a>
+                    <a href="https://www.linkedin.com/in/daniel-val%C3%A1%C5%A1ek-0595431a7/" target="blank"><img class="img-fluid" id="li" src="./images/linked-in.png" alt="linkedin.com"></a>
+                    <a href="https://github.com/dondowoldo" target="blank"><img class="img-fluid" id="gh" src="./images/github.png" alt="github.com"></a>
+                </div>
+            </article>
+        </div>
+        <footer>
+            <p class="footer_sign">Daniel Valasek</p>
+            <p class="footer_sign">November 2022</p>
+        </footer>
+    </div>
+</body>
+
+
+</html>

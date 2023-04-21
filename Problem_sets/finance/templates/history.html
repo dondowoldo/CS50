@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <div class="container py-5 text-center">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Symbol</th>
+                    <th class="text-end">Shares</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-end">Transaction type</th>
+                    <th class="text-end">Transacted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td class="text-start">{{ transaction["symbol"] }} </td>
+                        <td class="text-end">{{ transaction["quantity"] }} </td>
+                        {% if transaction["type"] == "sell" %}
+                            <td class="text-end">{{ transaction["sell_price"] }} </td>
+                        {% else %}
+                            <td class="text-end">{{ transaction["buy_price"] }} </td>
+                        {% endif %}
+                        <td class="text-end">{{ transaction["type"] }} </td>
+                        <td class="text-end">{{ transaction["time"] }} </td>
+                    </tr>
+                {% endfor %}
+            </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+{% endblock %}

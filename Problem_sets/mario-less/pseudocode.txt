@@ -1,0 +1,19 @@
+Ask user for an input value in specific range
+If value in range
+    store value
+Else
+    request the value again
+If the amount of blocks in one column is less than a value requested by user
+Print out amount of spaces equal to user input minus amount of blocks created in one row
+    create a block
+Else
+    Do nothing
+If the amount of blocks in a row is smaller compared to a column
+    create a block
+Else
+    Do nothing
+Move onto the next row
+If loops finished
+ Quit
+Else
+    Go back to line 6

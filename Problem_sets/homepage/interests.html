@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta name="viewport" content="initial-scale=1, width=device-width">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link href="styles.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sen&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+<title>Daniel's Webpage</title>
+</head>
+<body>
+    <div class="outer_container">
+        <header class="collapse show" id="head">
+            <h1 class="name">Daniel V.</h1>
+            <ul class="top_nav">
+                <li><button type="button" onclick="location.href='index.html'" class="top_button">Homepage</button></li>
+                <li><button type="button" onclick="location.href='interests.html'" class="top_button">Interests</button></li>
+                <li><button onclick="location.href='gallery.html'" class="top_button">Gallery</button></li>
+                <li><button onclick="location.href='contact.html'" class="top_button">Contact</button></li>
+            </ul>
+        </header>
+        <button id="hide" onclick="changeSign()" type="button" data-bs-toggle="collapse" data-bs-target="#head" aria-expanded="true" aria-controls="head">˄</button>
+        <script>
+            function changeSign(){
+                if (document.getElementById("hide").innerHTML == "˄")
+                {
+                    document.getElementById("hide").innerHTML = "˅"
+                }
+                else
+                {
+                    document.getElementById("hide").innerHTML = "˄"
+                }
+        }
+        </script>
+
+        <div class="inner_container">
+            <article class="text">
+                <h2 class="title">Interests & Hobbies</h2>
+                <p class="p_topspace">As you can probably tell by the whole theme of this website, I am a music enthusiast
+                    and I love to play the piano. Besides music I have a lot of other hobbies which inlcude for example:</p>
+                <p><i>fitness, roller-skating, travelling, fragrances, ocasional PC gaming,
+                    Netflix, and a new hobby I picked up recently - programming.</i></p>
+                <p>I have always liked exploring new technologies but never really dived into the deep source where the magic happens.</p>
+                <p>I knew very little basics of coding from university but it never really excited me.
+                    That all changed when I discovered CS50 course lead by professor David J. Malan.</p>
+                <p>Things that I didn't consider interesting in the past rapidly became a drive for me to learn more and all I can say
+                    is that I wish my university teachers approached teaching computer science with the same passion as David does
+                    because maybe I would have found out the true career path I wish now to pursue much sooner.
+                </p>
+            </article>
+        </div>
+        <footer>
+            <p class="footer_sign">Daniel Valasek</p>
+            <p class="footer_sign">November 2022</p>
+        </footer>
+    </div>
+</body>
+
+
+</html>

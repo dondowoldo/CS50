@@ -1,0 +1,227 @@
+body
+{
+    background-image: url("./images/piano2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.outer_container
+{
+    display: flex;
+    height: auto;
+    flex-direction: column;
+}
+
+header
+{
+    padding: 2%;
+    display: flex;
+    justify-content: left;
+    background-color: hsl(187, 41%, 21%, 0.8);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.name
+{
+    font-family: 'Abril Fatface';
+    color: white;
+    font-weight: normal;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    font-size: 48px;
+}
+
+.top_nav
+{
+    list-style: none;
+    display: flex;
+    flex-grow: 2;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-left: 5%;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 70%;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 24px;
+}
+
+.top_button
+{
+    border: 0;
+    background-color: hsl(187, 41%, 21%, 0.0);
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+}
+
+.top_button:hover
+{
+    background-color: hsl(187, 50%, 14%, 0.5);
+    transform: scale(1.2);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.top_button:active
+{
+    /*transform: translateY(1px);   */
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.inner_container
+{
+    flex-direction: column;
+    display: flex;
+    background: hsla(0, 9%, 77%, 0.7);
+    max-width: 80%;
+    margin-bottom: 10%;
+    margin-top: 250px;
+    margin-right: 10%;
+    margin-left: 10%;
+    padding: 10%;
+    padding-top: 5%;
+    align-items: stretch;
+}
+
+.title
+{
+    font-family: 'Sen', sans-serif;
+    font-family: 'Tangerine', cursive;
+    font-weight: bold;
+    font-size: 84px;
+    text-align: center;
+}
+
+
+
+.text
+{
+    margin-top: 5%;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: bold;
+    font-size: 24px;;
+    color:rgb(29, 28, 28)
+}
+
+.p_topspace
+{
+    margin-top: 8%;
+}
+
+
+footer
+{
+    height:50px;
+    width: 100%;
+    background-color: #123236;
+    font-family: 'Sen', sans-serif;
+    font-family: 'Tangerine', cursive;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1%;
+    padding-right: 1%;
+    font-size: 32px;
+}
+
+.footer_sign
+{
+margin-top: 2px;
+margin-top: 2px;
+}
+
+#cs50
+{
+    margin-top: 60px;
+    display: block;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+.pointer
+{
+    margin-top: 8%;
+    text-align: center;
+}
+
+#hide
+{
+    text-align: center;
+    background-color:hsla(0, 0%, 100%, 0.4);
+    padding: 5px;
+    border-radius: 0px 100px 100px 0px;
+    width: 30px;
+    position: fixed;
+    top: 300px;
+    left: 0;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 10px;
+    border: 0;
+    height: 80px;
+}
+
+.socials
+{
+    margin-top: 100px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    z-index: 0;
+}
+
+.socials :hover
+{
+    transform: scale(1.1);
+}
+
+#fb
+{
+    max-width: 150px;
+    padding: 10px;
+    margin-bottom: 40px;
+}
+
+#ig
+{
+    width: 150px;
+    padding: 10px;
+}
+
+#li
+{
+    width: 300px;
+    padding: 10px;
+}
+
+#gh
+{
+    width: 250px;
+}
+
+.pic_container
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.theo
+{
+    max-width:250px;
+    margin: 20px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+.theo:hover
+{
+    transform: scale(1.2);
+}
