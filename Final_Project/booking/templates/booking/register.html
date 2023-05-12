@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{% url 'booking:register' %}" method="POST">
+<center>
+    <h1 class="heading" style="font-size: max(6vw, 80px);">Register</h1>
+    <form action="{% url 'booking:register' %}" method="POST" style="padding-top: 5rem;">
         {% csrf_token %}
         <div class="form-group w-50">
             <p><input class="form-control" autofocus type="text" name="username" placeholder="Username"></p>
@@ -29,7 +31,7 @@
         </div>
         <p><input class="btn btn-primary" type="submit" value="Register"></p>
     </form>
-
-    Already have an account? <a href="{% url 'booking:login' %}">Log In here.</a>
-
+    <br/>
+    <p style="color:white;">Already have an account? <a href="{% url 'booking:login' %}">Log In here.</a></p>
+</center>
 {% endblock %}

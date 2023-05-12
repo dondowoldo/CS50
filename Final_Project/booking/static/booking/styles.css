@@ -1,4 +1,38 @@
-/* body {
-color: white;
-background: linear-gradient(to right, #eaafc8, #654ea3);
-} */
+body {
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    /* background: linear-gradient(to top, #a8c0ff, #3f2b96); */
+    /* background: linear-gradient(to top, #eaafc8, #654ea3); */
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 7rem;
+}
+
+.navi-left {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.navi-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.heading {
+    background-image: linear-gradient(to right, #1414a8, #1cb5e0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-family: 'Josefin Sans', sans-serif;  
+}
+
+.container {
+    color: white;
+    outline: 1px dashed red;
+}
