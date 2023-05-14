@@ -23,26 +23,39 @@
         <ul class="nav">
             <div class="navi-left">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'booking:index' %}"><h1 class="heading">Browse for House</h1></a>
+                    <a class="nav-link" href="{% url 'booking:index' %}"><h1 class="heading">HouseBrowse</h1></a>
                 </li>
             </div>
-            <div class="navi-right">
+            
                 {% if not request.user.is_authenticated %}
+                <div class="navi-right">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'booking:login' %}">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'booking:register' %}">Register</a>
                 </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'booking:logout' %}">Logout</a>
-                    </li>
-                    <li class="nav-item">
-                        <img src="{% static 'booking/user.svg' %}" style="max-width: 100%; height: auto;">
-                    </li>
-                {% endif %}
             </div>
+                {% else %}    
+                    <div class="navi-right-loggedin">
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#userCollapse"><img src="{% static 'booking/user.svg' %}" id="userimg"></a>
+                        </li>
+
+                        <div class="collapse" id="userCollapse">
+                            <div class="card card-body">
+                                <a class="nav-link" href="{% url 'booking:logout' %}">My profile</a>
+                            </div>
+                            <div class="card card-body">
+                                <a class="nav-link" href="{% url 'booking:logout' %}">Messages</a>
+                            </div>
+                            <div class="card card-body">
+                                <a class="nav-link" href="{% url 'booking:logout' %}">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            
         </ul>
     
         {% block body %}

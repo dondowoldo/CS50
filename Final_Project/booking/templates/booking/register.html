@@ -7,31 +7,33 @@
 {% endblock %}
 
 {% block body %}
-<center>
-    <h1 class="heading" style="font-size: max(6vw, 80px);">Register</h1>
-    <form action="{% url 'booking:register' %}" method="POST" style="padding-top: 5rem;">
-        {% csrf_token %}
-        <div class="form-group w-50">
-            <p><input class="form-control" autofocus type="text" name="username" placeholder="Username"></p>
-        </div>
-        <div class="form-group w-50">
-            <p><input class="form-control" type="email" name="email" placeholder="E-mail Address"></p>
-        </div>
-        <div class="form-group w-50">
-            <p><input class="form-control" type="text" name="first_name" placeholder="First Name"></p>
-        </div>
-        <div class="form-group w-50">
-            <p><input class="form-control" type="text" name="last_name" placeholder="Last Name"></p>
-        </div>
-        <div class="form-group w-50">
-            <p><input class="form-control" type="password" name="password" placeholder="Password"></p>
-        </div>
-        <div class="form-group w-50">
-            <p><input class="form-control" type="password" name="confirmation" placeholder="Confirm Password"></p>
-        </div>
-        <p><input class="btn btn-primary" type="submit" value="Register"></p>
-    </form>
-    <br/>
-    <p style="color:white;">Already have an account? <a href="{% url 'booking:login' %}">Log In here.</a></p>
-</center>
+    <div class="container-fluid">
+        <center>
+            <h1 class="heading" style="font-size: max(6vw, 40px);">Register</h1>
+            <form action="{% url 'booking:register' %}" method="POST" style="padding-top: 2rem;">
+                {% csrf_token %}
+                <div class="form-group w-50">
+                    <p><input class="form-control" autofocus type="text" name="username" placeholder="Username"></p>
+                </div>
+                <div class="form-group w-50">
+                    <p><input class="form-control" type="email" name="email" placeholder="E-mail Address"></p>
+                </div>
+                <div class="form-group w-50">
+                    <p><input class="form-control" type="text" name="first_name" placeholder="First Name"></p>
+                </div>
+                <div class="form-group w-50">
+                    <p><input class="form-control" type="text" name="last_name" placeholder="Last Name"></p>
+                </div>
+                <div class="form-group w-50">
+                    <p><input class="form-control" type="password" name="password" placeholder="Password"></p>
+                </div>
+                <div class="form-group w-50">
+                    <p><input class="form-control" type="password" name="confirmation" placeholder="Confirm Password"></p>
+                </div>
+                <p><input class="btn btn-primary" type="submit" value="Register"></p>
+            </form>
+            <br/>
+            <p style="color:white;">Already have an account? <a href="{% url 'booking:login' %}">Log In here.</a></p>
+        </center>
+    </div>
 {% endblock %}

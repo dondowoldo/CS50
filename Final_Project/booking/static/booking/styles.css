@@ -1,8 +1,8 @@
 body {
-    height: 100vh;
+    min-height: 100vh;
+    min-width: 360px;
     width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-attachment: fixed;
     background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
     /* background: linear-gradient(to top, #a8c0ff, #3f2b96); */
     /* background: linear-gradient(to top, #eaafc8, #654ea3); */
@@ -11,7 +11,18 @@ body {
 .nav {
     display: flex;
     justify-content: space-between;
-    padding: 1rem 7rem;
+    padding-left: 2rem;
+    padding-right: 1rem;
+    outline: 1px dashed red;
+    align-items: center;
+}
+
+/* @media (max-width: 587px) {
+    .nav {
+      /* flex-direction: column; */
+      justify-content: center;
+    }
+ */
 }
 
 .navi-left {
@@ -22,10 +33,20 @@ body {
 .navi-right {
     display: flex;
     justify-content: flex-end;
+    /* outline: 1px dashed red; */
+}
+
+.navi-right-loggedin {
+    position: relative;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* outline: 1px dashed red; */
 }
 
 .heading {
-    background-image: linear-gradient(to right, #1414a8, #1cb5e0);
+    background-image: linear-gradient(to right, #52248f, #1cb5e0);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -34,5 +55,18 @@ body {
 
 .container {
     color: white;
-    outline: 1px dashed red;
+    /* outline: 1px dashed red; */
 }
+
+.card-body {
+    background: transparent;
+    padding: 0;
+    border: 0;
+}
+
+.collapse {
+    border: 1px solid green;
+    margin-right: 0;
+}
+
+
