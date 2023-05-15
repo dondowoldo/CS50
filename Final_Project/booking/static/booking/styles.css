@@ -6,12 +6,11 @@ body {
     background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
 }
 
-.nav {
+.nav_top {
     display: flex;
     justify-content: space-between;
     padding: 0;
     align-items: center;
-    outline: 1px dashed red;
     padding: 0.5rem;
     padding-bottom: 3rem;
     flex-wrap: nowrap;
@@ -46,4 +45,15 @@ body {
     .anonymouseimg {
         display:none;
     }
+}
+
+.panel_img:hover {
+    filter: invert(29%) sepia(34%) saturate(560%) hue-rotate(153deg) brightness(95%) contrast(97%);
+}
+
+.dropdown-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2b98c7;
 }

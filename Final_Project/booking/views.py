@@ -25,7 +25,10 @@ def login_view(request):
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "booking/login.html")
+        if not request.user:
+            return render(request, "booking/login.html")
+        else:
+            return HttpResponseRedirect(reverse("booking:index"))
 
 
 def logout_view(request):

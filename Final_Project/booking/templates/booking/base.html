@@ -10,6 +10,10 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> 
+        <script src="{% static 'booking/javascript.js' %}"></script>
         
         <title>
             {% block title %}
@@ -18,9 +22,7 @@
         </title>
     </head>
     <body>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-        <script src="{% static 'booking/javascript.js' %}"></script>
-            <ul class="nav">
+            <ul class="nav nav_top">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'booking:index' %}"><h1 class="heading">HouseBrowse</h1></a>
                 </li>
@@ -38,13 +40,13 @@
                 {% else %}
                 <div class="right_nav">
                     <li class="nav-item">
-                        <div class="dropdown">
-                            <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#messageDropdown" id="messages"><img src="{% static 'booking/message-circle32.svg' %}" alt="Messages"></a>
+                        <div class="dropdown-center">
+                            <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#messageDropdown" id="messages"><img class="panel_img" src="{% static 'booking/message-circle32.svg' %}" alt="Messages"></a>
                         
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="messages">
 
                                 <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/mail.svg' %}" style="padding-right: 2rem;">My Messages (TODO)</a></li>
-                                <hr>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/settings.svg' %}" style="padding-right: 2rem;">Sample Message (TODO)</a></li>
                                 <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/user-x.svg' %}" style="padding-right: 2rem;">Sample Message (TODO)</a></li>
                             </ul>
@@ -53,13 +55,14 @@
                     </li>
 
                     <li class="nav-item">
-                        <div class="dropdown">
-                            <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#userDropdown" id="userimg"><img src="{% static 'booking/user.svg' %}" alt="User"></a>
+                        <div class="dropdown-center">
+                            <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#userDropdown" id="userimg"><img class="panel_img" src="{% static 'booking/user.svg' %}" alt="User"></a>
                         
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userimg">
-                                <li><a class="dropdown-item disabled"><img src="{% static 'booking/user-check.svg' %}" style="padding-right: 2rem;">{{ request.user.username }}</a></li>
-                                <hr>
-                                <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/settings.svg' %}" style="padding-right: 2rem;">My profile (TODO)</a></li>
+                                <li><h6 class="dropdown-header"><img src="{% static 'booking/user-check.svg' %}" style="padding-right: 0.5rem;">{{ request.user.username }}</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/eye.svg' %}" style="padding-right: 2rem;">Watchlist(TODO)</a></li>
+                                <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/settings.svg' %}" style="padding-right: 2rem;">Profile Settings (TODO)</a></li>
                                 <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/user-x.svg' %}" style="padding-right: 2rem;">Logout</a></li>
                             </ul>
 
@@ -68,7 +71,6 @@
                 </div>
                 {% endif %}
             </ul>
-
     {% block body %}
     {% endblock %}
     </body>
