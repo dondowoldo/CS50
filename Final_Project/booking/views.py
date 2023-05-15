@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import PropertyFilter
+from datetime import date, timedelta
 
 from .models import User, PropertyType
 
@@ -76,6 +77,12 @@ def index(request):
             form = PropertyFilter(request.POST)  
             if form.is_valid():               
                 filters = form.cleaned_data
+                
+                # a = filters["availability_from"]
+                # b = a + timedelta(days=3)
+                # print(a)
+                # print (b)
+
                 return render(request, "booking/index.html", {
                 
                 "type": filters["type"],
