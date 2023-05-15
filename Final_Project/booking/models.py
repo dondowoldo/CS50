@@ -5,12 +5,19 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.username}"
     
+class PropertyType(models.Model):
+    type = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.type}"
+
+    
 class Listing(models.Model):
     name = models.CharField(max_length=100)
     price_per_day = models.FloatField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created")
     date_created = models.DateTimeField(auto_now_add=True)
-    property_type = models.CharField(max_length=10)
+    type = models.ForeignKey(PropertyType, on_delete=models.CASCADE, null=True, related_name="property_type")
     active = models.BooleanField(default=True)
     imageurl = models.URLField(max_length=300, blank=True)
     location = models.CharField(max_length=30)

@@ -16,6 +16,12 @@ body {
     flex-wrap: nowrap;
 }
 
+.nav_bottom {
+    outline: 1px dashed red;
+    width: 80%;
+    margin: auto;
+}
+
 .right_nav {
     display: flex;
 }
@@ -51,6 +57,7 @@ body {
     filter: invert(29%) sepia(34%) saturate(560%) hue-rotate(153deg) brightness(95%) contrast(97%);
 }
 
+    /* Logged in user dropdown */
 .dropdown-header {
     display: flex;
     justify-content: center;
