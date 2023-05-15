@@ -16,7 +16,7 @@ class Listing(models.Model):
     location = models.CharField(max_length=30)
     gps_location = models.CharField(max_length=50)
     watchlist = models.ManyToManyField(User, blank=True, related_name="watching")
-    description = models.CharField(max_length=150)
+    description = models.TextField(max_length=150)
 
     def __str__(self):
         return f"{self.name}"
