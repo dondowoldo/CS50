@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import User
+from .models import User, PropertyType
 
 def login_view(request):
     if request.method == "POST":
@@ -69,5 +69,5 @@ def register(request):
 
 def index(request):
     return render(request, "booking/index.html", {
-
+        "property_types": PropertyType.objects.all()
     })
