@@ -16,12 +16,6 @@ body {
     flex-wrap: nowrap;
 }
 
-.nav_bottom {
-    outline: 1px dashed red;
-    width: 80%;
-    margin: auto;
-}
-
 .right_nav {
     display: flex;
 }
@@ -63,4 +57,12 @@ body {
     justify-content: center;
     align-items: center;
     color: #2b98c7;
+}
+
+.filter_buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    gap: 0.5rem;
+    justify-content: center;
 }

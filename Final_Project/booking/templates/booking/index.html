@@ -8,15 +8,30 @@
 
 
 {% block body %}
-    <ul class="nav_bottom nav">
-        <li class="nav-item">
-            <select>
-                <option class="nav-link" value="">--All--</option>
-                <option class="nav-link" value="house">House</option>
-                <option class="nav-link" value="apartment">Apartment</option>
-            </select>
-        </li>
-    </ul>
+    <div class="container">
+        <p>
+        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Filters
+          </a>
+        </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body" style="background: transparent; border: 0;">           
+                    <div class="form-group">
+                        <center>
+                    <form action="" method="POST" style="width: 50%;">
+                        {% csrf_token %}
+                        {{ form }}
+                        <div class="filter_buttons">
+                            <input class="btn btn-success" type="submit" name="filter" value="Submit" style="min-width: 73%;">
+                            <input class="btn btn-warning" type="submit" name="reset" value="Reset" style="min-width: 25%;">
+                        </div>
+                    </form>
+                </center>
+                </div>
+            </div>
+          </div>
+    </div>
+
 
     <div class="container">
         {% lorem %}

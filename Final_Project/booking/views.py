@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .forms import PropertyFilter
 
 from .models import User, PropertyType
 
@@ -25,10 +26,8 @@ def login_view(request):
                 "message": "Invalid username and/or password."
             })
     else:
-        if not request.user:
-            return render(request, "booking/login.html")
-        else:
-            return HttpResponseRedirect(reverse("booking:index"))
+        return render(request, "booking/login.html")
+
 
 
 def logout_view(request):
@@ -68,6 +67,28 @@ def register(request):
 
 
 def index(request):
-    return render(request, "booking/index.html", {
-        "property_types": PropertyType.objects.all()
-    })
+    if request.method =="GET":
+        return render(request, "booking/index.html", {
+            "form": PropertyFilter(),
+        })
+    else:
+        if  request.POST.get("filter"):
+            form = PropertyFilter(request.POST)  
+            if form.is_valid():               
+                filters = form.cleaned_data
+                return render(request, "booking/index.html", {
+                
+                "type": filters["type"],
+                "maxprice": filters["price_per_day"],
+                "avlbl_from": filters["availability_from"],
+                "avlbl_to": filters["availability_to"],
+                "form": form
+                })
+            else:
+                return render(request, "booking/index.html", {
+                "form": form
+                })       
+        elif request.POST.get("reset"):
+            return HttpResponseRedirect(reverse("booking:index"))
+        
+
