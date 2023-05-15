@@ -10,26 +10,32 @@
 {% block body %}
     <div class="container">
         <p>
-        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Filters
-          </a>
+            <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilters" role="button" aria-expanded="false" aria-controls="collapseFilters">
+            <img src="{% static 'booking/filter20.svg' %}" style="padding-right: 0.25rem;">Filters
+            </a>
+            {% if request.user.is_authenticated %}
+            <a class="btn btn-secondary" href="#collapseExample" role="button">
+            <img src="{% static 'booking/file-plus20.svg' %}" style="padding-right: 0.25rem;">Create Listing
+            </a>
+            {% endif %}
         </p>
-          <div class="collapse" id="collapseExample">
+
+        <div class="collapse" id="collapseFilters">
             <div class="card card-body" style="background: transparent; border: 0;">           
-                    <div class="form-group">
-                        <center>
-                    <form action="" method="POST" style="width: 50%;">
-                        {% csrf_token %}
-                        {{ form }}
-                        <div class="filter_buttons">
-                            <input class="btn btn-success" type="submit" name="filter" value="Submit" style="min-width: 73%;">
-                            <input class="btn btn-warning" type="submit" name="reset" value="Reset" style="min-width: 25%;">
-                        </div>
-                    </form>
-                </center>
+                <div class="form-group">
+                    <center>
+                        <form action="" method="POST" style="width: 50%;">
+                            {% csrf_token %}
+                            {{ form }}
+                            <div class="filter_buttons">
+                                <input class="btn btn-success" type="submit" name="filter" value="Submit" style="min-width: 73%;">
+                                <input class="btn btn-warning" type="submit" name="reset" value="Reset" style="min-width: 25%;">
+                            </div>
+                        </form>
+                    </center>
                 </div>
             </div>
-          </div>
+        </div>
     </div>
 
 

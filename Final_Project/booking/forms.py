@@ -29,10 +29,12 @@ class PropertyFilter(ModelForm):
             'price_per_day'
         )
 
-        labels = {"type": 'Property Type ',
+        labels = {
+                "type": 'Property Type ',
                 "availability_from": 'From ',
                 "availability_to": 'To ',
-                "price_per_day": 'Max price per day '}
+                "price_per_day": 'Max price per day '
+        }
         
         widgets = {
             "type": forms.Select(attrs={'class':'form-control'}),
