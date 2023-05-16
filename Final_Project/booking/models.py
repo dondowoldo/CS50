@@ -13,8 +13,8 @@ class PropertyType(models.Model):
 
     
 class Listing(models.Model):
-    name = models.CharField(max_length=100)
-    price_per_day = models.FloatField()
+    title = models.CharField(max_length=100)
+    price_per_night = models.FloatField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created")
     date_created = models.DateTimeField(auto_now_add=True)
     type = models.ForeignKey(PropertyType, on_delete=models.CASCADE, null=True, related_name="property_type")
@@ -28,7 +28,7 @@ class Listing(models.Model):
     availability_to = models.DateField()
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.title}"
     
 
 class Comment(models.Model):

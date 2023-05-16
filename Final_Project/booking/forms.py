@@ -20,25 +20,41 @@ class PropertyFilter(ModelForm):
 
     class Meta:
         model = Listing
-        fields = ("type", "availability_from", "availability_to", "price_per_day")
+        fields = ("type", "availability_from", "availability_to", "price_per_night")
 
         required = (
             'type',
             'availability_from',
             'availability_to',
-            'price_per_day'
+            'price_per_night'
         )
 
         labels = {
-                "type": 'Property Type ',
-                "availability_from": 'From ',
-                "availability_to": 'To ',
-                "price_per_day": 'Max price per day '
+                "type": 'Property Type',
+                "availability_from": 'From',
+                "availability_to": 'To',
+                "price_per_night": 'Max price per night'
         }
         
         widgets = {
             "type": forms.Select(attrs={'class':'form-control'}),
             "availability_from": DateInput(attrs={'class':'form-control'}),
             "availability_to": DateInput(attrs={'class':'form-control'}),
-            "price_per_day": forms.NumberInput(attrs={'class':'form-control', 'placeholder': '$'})
+            "price_per_night": forms.NumberInput(attrs={'class':'form-control', 'placeholder': ''})
         }
+
+
+class AddProperty(ModelForm):
+    class Meta:
+        model = Listing
+        fields = (
+            "title",
+            "type",
+            "price_per_night",
+            "imageurl",
+            "location",
+            "description",
+            "availability_from",
+            "availability_to"
+            )
+        

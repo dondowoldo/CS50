@@ -5,7 +5,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = "id", "username", "first_name", "last_name", "email","date_joined", "is_staff"
 
 class ListingAdmin(admin.ModelAdmin):
-    list_display = "id", "name", "creator", "price_per_day", "type", "date_created", "active"
+    list_display = "id", "title", "creator", "price_per_night", "type", "date_created", "active"
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = "user", "listing", "comment", "timestamp"

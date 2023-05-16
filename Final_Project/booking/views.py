@@ -86,7 +86,7 @@ def index(request):
                 return render(request, "booking/index.html", {
                 
                 "type": filters["type"],
-                "maxprice": filters["price_per_day"],
+                "maxprice": filters["price_per_night"],
                 "avlbl_from": filters["availability_from"],
                 "avlbl_to": filters["availability_to"],
                 "form": form
@@ -98,4 +98,8 @@ def index(request):
         elif request.POST.get("reset"):
             return HttpResponseRedirect(reverse("booking:index"))
         
+@login_required(login_url='booking:login')
+def addProperty(request):
+    return render(request, "booking/add.html", {
 
+    })
