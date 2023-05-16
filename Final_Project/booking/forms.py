@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import User, PropertyType, Listing
+from .models import PropertyType, Listing
 
 
 class CreatePropType(ModelForm):
@@ -48,13 +48,34 @@ class AddProperty(ModelForm):
     class Meta:
         model = Listing
         fields = (
-            "title",
             "type",
+            "title",
             "price_per_night",
             "imageurl",
             "location",
-            "description",
             "availability_from",
-            "availability_to"
+            "availability_to",
+            "description"
             )
         
+        labels = {
+            "title": '',
+            "type": 'Type of Property',
+            "price_per_night": '',
+            "imageurl": '',
+            "location": '',
+            "availability_from": 'Available from',
+            "availability_to": 'Available to',
+            "description": ''
+        }
+
+        widgets = {
+            "type": forms.Select(attrs={'class': 'form-control'}),
+            "title": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
+            "price_per_night": forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Price (for each night)'}),
+            "imageurl": forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'URL with property photo'}),
+            "location": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Location (Town) of the property'}),
+            "availability_from": DateInput(attrs={'class': 'form-control'}),
+            "availability_to": DateInput(attrs={'class': 'form-control'}),
+            "description": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description...'})
+        }

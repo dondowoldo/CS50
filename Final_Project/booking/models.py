@@ -28,7 +28,7 @@ class Listing(models.Model):
     availability_to = models.DateField()
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.title} : {self.price_per_night} : {self.location}"
     
 
 class Comment(models.Model):

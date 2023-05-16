@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import PropertyFilter
+from .forms import PropertyFilter, AddProperty
 from datetime import date, timedelta
 
 from .models import User, PropertyType
@@ -100,6 +100,18 @@ def index(request):
         
 @login_required(login_url='booking:login')
 def addProperty(request):
-    return render(request, "booking/add.html", {
-
-    })
+    if request.method == "GET":
+        return render(request, "booking/add.html", {
+            "form": AddProperty()
+        })
+    else:
+        form = AddProperty(request.POST)
+        if form.is_valid:
+            complete_form = form.save(commit=False)
+            complete_form.creator = request.user
+            complete_form.save()
+            return HttpResponseRedirect(reverse("booking:index"))
+        else:
+            return render(request, "booking/add.html", {
+                "form": form
+            })
