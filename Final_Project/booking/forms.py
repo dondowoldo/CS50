@@ -1,7 +1,11 @@
 from django import forms
 from django.forms import ModelForm
-from .models import PropertyType, Listing
-from datetime import date, timedelta
+from .models import Listing
+from datetime import timedelta, datetime
+#import pytz
+
+# Set timezone if necessary
+# tz = pytz.timezone('Europe/Prague')
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -44,6 +48,8 @@ class PropertyFilter(ModelForm):
         ato = cleaned_data.get("availability_to")
         price = cleaned_data.get("price_per_night")
         errors = []
+
+        print(datetime.now())
         
         if price is not None and price <= 0:
                 errors.append(forms.ValidationError("Invalid Price"))
@@ -51,7 +57,7 @@ class PropertyFilter(ModelForm):
         if afrom is not None and ato is not None and afrom > ato:
                 errors.append(forms.ValidationError("Invalid date. Start date has to be before End date."))
         
-        if afrom is not None and afrom < date.today() or ato is not None and ato < date.today():
+        if afrom is not None and afrom < datetime.now().date() or ato is not None and ato < datetime.now().date():
              errors.append(forms.ValidationError("Invalid date. Can't select dates before today."))
         
         if errors:
