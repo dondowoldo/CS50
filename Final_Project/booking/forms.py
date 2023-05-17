@@ -48,8 +48,6 @@ class PropertyFilter(ModelForm):
         ato = cleaned_data.get("availability_to")
         price = cleaned_data.get("price_per_night")
         errors = []
-
-        print(datetime.now())
         
         if price is not None and price <= 0:
                 errors.append(forms.ValidationError("Invalid Price"))
@@ -101,3 +99,24 @@ class AddProperty(ModelForm):
             "availability_to": DateInput(attrs={'class': 'form-control'}),
             "description": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description...'})
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        afrom = cleaned_data.get("availability_from")
+        ato = cleaned_data.get("availability_to")
+        price = cleaned_data.get("price_per_night")
+        errors = []
+        
+        if price <= 0:
+            errors.append(forms.ValidationError("Invalid Price"))
+
+        if afrom > ato:
+            errors.append(forms.ValidationError("Invalid date. Start date has to be before End date."))
+        
+        if afrom < datetime.now().date() or ato < datetime.now().date():
+             errors.append(forms.ValidationError("Invalid date. Can't select dates before today."))
+        
+        if errors:
+            raise forms.ValidationError(errors)
+           
+        return cleaned_data

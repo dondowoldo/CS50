@@ -106,7 +106,7 @@ def addProperty(request):
         })
     else:
         form = AddProperty(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             complete_form = form.save(commit=False)
             complete_form.creator = request.user
             complete_form.save()
