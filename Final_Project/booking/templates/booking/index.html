@@ -24,9 +24,9 @@
         </div>
 
         {% if form.non_field_errors %}
-        <div class="collapse.show" id="collapseFilters">
+        <div style="transition: 0.7s;" class="collapse.show" id="collapseFilters">
         {% else %}
-        <div class="collapse" id="collapseFilters">
+        <div style="transition: 0.7s;" class="collapse" id="collapseFilters">
         {% endif %}
             <center>
             <div class="card card-body" style="background: transparent; border: 0;">           
@@ -81,16 +81,28 @@
                 </div>
                 <div class="listing_card_content">
                     <div class="property_title_cont">
-                        <h1 style="font-family: 'Josefin Sans', sans-serif; color: black;">{{ listing.title }}</h1>
+                        <h1 class="heading" style="font-family: 'Baloo 2'; font-size: 3rem;">{{ listing.title }}</h1>
                     </div>
                     <div class="info">
                         <ul style="padding: 0; list-style-type: none;">
                             <li><span class="heading">{{ listing.location }}</span></li>
-                            <li><span class="heading">${{ listing.price_per_night |floatformat:2 }} / night</span></li>
+                            <div class="listing_last_row">
+                                <li><span class="heading">${{ listing.price_per_night |floatformat:2 }} / night</span></li>
+                                <li>
+                                    <a class="btn btn-outline-secondary" href="#DetailsPage">Details</a>
+                                    <a class="btn btn-outline-success" href="#BookPage">Book Now!</a>  
+                                </li>
+                                <li>
+                                    <img class="icons" id="message" src="{% static 'booking/message-square_grey_24.svg' %}">
+                                    <img class="icons" id="watch" src="{% static 'booking/eye_grey_24.svg' %}">
+                                    <img class="icons" id="heart" src="{% static 'booking/heart_grey_24.svg' %}">
+                                </li>
+                            </div>
                         </ul>
                     </div>
                     <div class="footing">
-
+                        <span style="font-family: 'Baloo 2'; font-size: 1.5rem; color:dimgrey; padding: 0 0.5rem;">Listed by: {{ listing.creator }}</span>
+                        <span style="font-family: 'Baloo 2'; font-size: 1.5rem; color:dimgrey; padding: 0 0.5rem;"><i>{{ listing.date_created.date }}</i></span>
                     </div>
                 </div>
 

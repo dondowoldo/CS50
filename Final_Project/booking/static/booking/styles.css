@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
 body {
     min-height: 100vh;
     width: 100%;
@@ -47,10 +49,9 @@ body {
     }
 }
 
-
-
 .panel_img:hover {
     filter: invert(29%) sepia(34%) saturate(560%) hue-rotate(153deg) brightness(95%) contrast(97%);
+    transition: .3s;
 }
 
     /* Logged in user dropdown */
@@ -151,8 +152,8 @@ body {
 .property_title_cont {
     display: flex;
     width: 100%;
-    justify-content: center;
-    padding: 1rem;
+    justify-content: flex-start;
+    padding: 1rem 0;
 }
 
 .info {
@@ -170,7 +171,8 @@ body {
     /* border-radius: 0 0 1rem 1rem; */
     border-radius: 1rem;
     height: 20%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+
     /* background-image: linear-gradient(60deg, #29323c 0%, #485563 100%); */
 }
 
@@ -180,8 +182,34 @@ body {
     }
 }
 
-
 a, a:hover {
 	text-decoration: none;
 	transition: color 0.3s ease-in-out;
+}
+
+.listing_last_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.icons {
+    transition: .5s;
+}
+
+.icons:hover {
+    transition: .3s;
+    transform: scale(1.1)
+}
+
+#heart:hover {
+    filter: brightness(0) saturate(100%) invert(42%) sepia(99%) saturate(4371%) hue-rotate(331deg) brightness(102%) contrast(97%);
+}
+
+#message:hover {
+    filter: brightness(0) saturate(100%) invert(41%) sepia(97%) saturate(977%) hue-rotate(200deg) brightness(93%) contrast(97%);
+}
+
+#watch:hover {
+    filter: brightness(0) saturate(100%) invert(69%) sepia(35%) saturate(438%) hue-rotate(92deg) brightness(96%) contrast(92%);
 }
