@@ -73,16 +73,35 @@
         </ul>
         {% endif %}
         
-        {% lorem %}
-        <br/>
-        <br/>
-        {% lorem %}
-        {% lorem %}
-        <br/>
-        <br/>
-        {% lorem %}
-        <br/>
-        <br/>
-        {% lorem %}
+        <div class="property_listings">
+            {% for listing in listings %}
+            <div class="listing_card">
+                <div class="listing_img_cont">
+                    <img class="listing_img" src="{{ listing.imageurl}}">
+                </div>
+                <div class="listing_card_content">
+                    <div class="property_title_cont">
+                        <h1 style="font-family: 'Josefin Sans', sans-serif; color: black;">{{ listing.title }}</h1>
+                    </div>
+                    <div class="info">
+                        <ul style="padding: 0; list-style-type: none;">
+                            <li><span class="heading">{{ listing.location }}</span></li>
+                            <li><span class="heading">${{ listing.price_per_night |floatformat:2 }} / night</span></li>
+                        </ul>
+                    </div>
+                    <div class="footing">
+
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+
+
+            
+
+        </div>
+
+
     </div>
 {% endblock %}
