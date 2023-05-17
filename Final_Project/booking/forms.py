@@ -1,12 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import PropertyType, Listing
-
-
-class CreatePropType(ModelForm):
-    class Meta:
-        model = PropertyType
-        fields = ("type",)
+from datetime import date, timedelta
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -42,6 +37,27 @@ class PropertyFilter(ModelForm):
             "availability_to": DateInput(attrs={'class':'form-control'}),
             "price_per_night": forms.NumberInput(attrs={'class':'form-control', 'placeholder': ''})
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        afrom = cleaned_data.get("availability_from")
+        ato = cleaned_data.get("availability_to")
+        price = cleaned_data.get("price_per_night")
+        errors = []
+        
+        if price is not None and price <= 0:
+                errors.append(forms.ValidationError("Invalid Price"))
+
+        if afrom is not None and ato is not None and afrom > ato:
+                errors.append(forms.ValidationError("Invalid date. Start date has to be before End date."))
+        
+        if afrom is not None and afrom < date.today() or ato is not None and ato < date.today():
+             errors.append(forms.ValidationError("Invalid date. Can't select dates before today."))
+        
+        if errors:
+            raise forms.ValidationError(errors)
+        
+        return cleaned_data
 
 
 class AddProperty(ModelForm):

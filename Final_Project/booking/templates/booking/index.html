@@ -23,14 +23,21 @@
             {% endif %}
         </div>
 
+        {% if form.non_field_errors %}
+        <div class="collapse.show" id="collapseFilters">
+        {% else %}
         <div class="collapse" id="collapseFilters">
+        {% endif %}
             <center>
             <div class="card card-body" style="background: transparent; border: 0;">           
                 <div class="form-group">
                     
                         <form action="" method="POST" style="min-width: 260px; max-width: 500px;">
                             {% csrf_token %}
-                            
+                                
+                                
+
+
                             {% for field in form %}
                                 {% if field == form.price_per_night %}
                                     {{ field.label_tag }}
@@ -58,6 +65,14 @@
 
 
     <div class="container">
+        {% if form.non_field_errors %}
+        <ul>
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        
         {% lorem %}
         <br/>
         <br/>
