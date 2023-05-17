@@ -6,7 +6,9 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import PropertyFilter, AddProperty
+from .models import Listing
 from datetime import date, timedelta
+from django.db.models import Q
 
 from .models import User, PropertyType
 
@@ -71,25 +73,37 @@ def index(request):
     if request.method =="GET":
         return render(request, "booking/index.html", {
             "form": PropertyFilter(),
+            "listings": Listing.objects.all()
         })
     else:
         if  request.POST.get("filter"):
             form = PropertyFilter(request.POST)  
             if form.is_valid():               
-                filters = form.cleaned_data
                 
-                # a = filters["availability_from"]
-                # b = a + timedelta(days=3)
-                # print(a)
-                # print (b)
+                ## QUERING DB FOR FILTERS IF SPECIFIED BY USER
+                filters = form.cleaned_data
+                query = Q()
+            
+                if filters["title"] is not None:
+                    query &= Q(title__contains=filters["title"])
+                
+                if filters["type"] is not None:
+                    query &= Q(type=filters["type"])
+                
+                if filters["price_per_night"]:
+                    query &= Q(price_per_night__lte=filters["price_per_night"])
+
+                if filters["availability_from"]:
+                    query &= Q(availability_from__lte=filters["availability_from"])
+
+                if filters["availability_to"]:
+                    query &= Q(availability_to__gte=filters["availability_to"])
+
+                filtered = Listing.objects.filter(query)                
 
                 return render(request, "booking/index.html", {
-                
-                "type": filters["type"],
-                "maxprice": filters["price_per_night"],
-                "avlbl_from": filters["availability_from"],
-                "avlbl_to": filters["availability_to"],
-                "form": form
+                "form": form,
+                "listings": filtered
                 })
             else:
                 return render(request, "booking/index.html", {
