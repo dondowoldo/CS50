@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Index Page
+    Home
 {% endblock %}
 
 
@@ -78,7 +78,7 @@
                 <div class="listing_img_cont">
                     <img class="listing_img" src="{{ listing.imageurl}}">
                     <div class="property_title_cont">
-                        <h1 class="card_heading">{{ listing.title }}</h1>
+                        <a href="{% url 'booking:detail' listing.id %}"><h1 class="card_heading">{{ listing.title }}</h1></a>
                     </div>
                 </div>
                 <div class="listing_card_content">
