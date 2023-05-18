@@ -88,7 +88,7 @@
                             <div class="listing_last_row">
                                 <li><span class="heading">${{ listing.price_per_night |floatformat:2 }} / night</span></li>
                                 <li>
-                                    <a class="btn btn-outline-secondary" href="#DetailsPage">Details</a>
+                                    <a class="btn btn-outline-secondary" id="details_button" href="#DetailsPage">Details</a>
                                     <a class="btn btn-outline-success" href="#BookPage">Book Now!</a>  
                                 </li>
                                 <li>
@@ -100,8 +100,8 @@
                         </ul>
                     </div>
                     <div class="footing">
-                        <span style="font-family: 'Baloo 2'; font-size: 1.5rem; color:dimgrey; padding: 0 0.5rem;">Listed by: {{ listing.creator }}</span>
-                        <span style="font-family: 'Baloo 2'; font-size: 1.5rem; color:dimgrey; padding: 0 0.5rem;"><i>{{ listing.date_created.date }}</i></span>
+                        <span class="footing_text"><i>Listed by: {{ listing.creator }}</i></span>
+                        <span class="footing_text"><i>{{ listing.date_created.date }}</i></span>
                     </div>
                 </div>
 
