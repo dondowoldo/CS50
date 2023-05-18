@@ -87,6 +87,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -107,6 +108,7 @@ body {
 .listing_card {
     width: 100%;
     min-height: 239px;
+    min-width: 360px;
     border-radius: 1rem;
     display: flex;
     flex-direction: row;
