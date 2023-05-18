@@ -9,6 +9,10 @@ from datetime import timedelta, datetime
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+    
+    def get_context(self, name, value, attrs):
+        attrs.setdefault('min', datetime.now().strftime('%Y-%m-%d'))
+        return super().get_context(name, value, attrs)
 
 class PropertyFilter(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -38,11 +42,11 @@ class PropertyFilter(ModelForm):
         }
         
         widgets = {
-            "title": forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Property name'}),
+            "title": forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Search by title..'}),
             "type": forms.Select(attrs={'class':'form-control'}),
             "availability_from": DateInput(attrs={'class':'form-control'}),
             "availability_to": DateInput(attrs={'class':'form-control'}),
-            "price_per_night": forms.NumberInput(attrs={'class':'form-control', 'placeholder': ''})
+            "price_per_night": forms.NumberInput(attrs={'class':'form-control', 'placeholder': 'Maximum price / night'})
         }
 
     def clean(self):

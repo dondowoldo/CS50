@@ -119,7 +119,7 @@ body {
 .listing_card:hover {
     box-shadow: 0 16px 32px rgb(0 0 0 / 0.3);
     transition: .5s;
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     
     .listing_img {
         transform: scale(1.07)
@@ -210,6 +210,6 @@ a, a:hover {
     filter: brightness(0) saturate(100%) invert(41%) sepia(97%) saturate(977%) hue-rotate(200deg) brightness(93%) contrast(97%);
 }
 
-#watch:hover {
+/* #watch:hover {
     filter: brightness(0) saturate(100%) invert(69%) sepia(35%) saturate(438%) hue-rotate(92deg) brightness(96%) contrast(92%);
-}
+} */

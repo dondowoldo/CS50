@@ -40,8 +40,7 @@
 
                             {% for field in form %}
                                 {% if field == form.price_per_night %}
-                                    {{ field.label_tag }}
-                                    <div class="input-group">
+                                    <div class="input-group" style="margin-top: 1.5rem">
                                         <span class="input-group-text">$</span>
                                         {{ field }}
                                     </div>
@@ -94,7 +93,7 @@
                                 </li>
                                 <li>
                                     <img class="icons" id="message" src="{% static 'booking/message-square_grey_24.svg' %}">
-                                    <img class="icons" id="watch" src="{% static 'booking/eye_grey_24.svg' %}">
+                                    <!-- <img class="icons" id="watch" src="{% static 'booking/eye_grey_24.svg' %}"> -->
                                     <img class="icons" id="heart" src="{% static 'booking/heart_grey_24.svg' %}">
                                 </li>
                             </div>
