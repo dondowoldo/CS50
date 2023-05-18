@@ -39,7 +39,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     font-family: 'Baloo 2';
-    font-size: 2.5rem;
+    font-size: 2em;
     margin: 0;
     padding: 0;
     line-height: 1;
@@ -94,47 +94,51 @@ body {
     flex-wrap: nowrap;
     gap: 0.25rem;
     padding-bottom: 2rem;
+    min-width: 324px;
+    justify-content: center;
+    padding: 0 1.5rem 0 1.5rem;
+    /* outline: 1px dashed red; */
 }
 
 .property_listings {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1.5rem;
 }
 
-.property_title {
-    /* background-image: linear-gradient(to right, #5e4df7, #4f99ee); */
-    background-image: linear-gradient(to right, #52248f, #1cb5e0);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    font-family: 'Josefin Sans', sans-serif;
-    padding: 0;
-    text-align: center;
-    line-height: 1;
-    width: 100%;
-    font-weight: 400;
+@media (max-width: 421px) {
+    .property_listings {
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    .container {
+        width: 100%;
+    }
 }
 
+
 .listing_card {
-    width: 100%;
-    min-height: 239px;
-    min-width: 360px;
+    height: 485px;
+    max-width: 360px;
     border-radius: 1rem;
     display: flex;
-    flex-direction: row;
-    /* border: 1px solid black; */
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #e1e5ea;
     transition: .5s;
-    /* background-image: linear-gradient(to bottom, #1d2327, #8390b8); */
+    /* background-image: linear-gradient(to bottom, #1d2327, #8390b8); */ 
 }
 
 .listing_card:hover {
     box-shadow: 0 16px 32px rgb(0 0 0 / 0.3);
     transition: .5s;
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     
     .listing_img {
         transform: scale(1.07)
@@ -144,12 +148,16 @@ body {
 
 .listing_img_cont {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 25%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     min-width: 359px;
     padding: 0.5rem;
+    overflow: hidden;
+
+    
+    
 }
 
 .listing_img {
@@ -162,16 +170,20 @@ body {
 .listing_card_content {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     width: 100%;
-    font-size: 1.4rem;
-    padding: 0 1rem 0 1rem;
+    font-size: 1.3rem;
+    padding: 0 0 0.5rem 0.5rem;
+
+    /* padding: 0 0 0 0.5rem;    MAYBE ???? */ 
 }
 
 .property_title_cont {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 0.5rem 0 0 0;
+    margin-top: 1rem;
+    padding: 0;
 }
 
 .info {
@@ -186,25 +198,21 @@ body {
     flex-direction: row;
     justify-content: space-between;
     background-color: white;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
     /* border-radius: 0 0 1rem 1rem; */
     border-radius: 1rem;
     height: 20%;
     align-items: center;
+
+    flex-wrap: nowrap;
+    
+ 
     /* border: 1px solid black; */
 
     /* background-image: linear-gradient(60deg, #29323c 0%, #485563 100%); */
 }
 
-@media (max-width: 767px) {
-    .listing_card {
-        flex-direction: column;
-    }
-
-    .listing_last_row {
-        max-width: 280px;
-    }
-
-}
 
 a, a:hover {
 	text-decoration: none;
@@ -212,10 +220,12 @@ a, a:hover {
 }
 
 .listing_last_row {
+    max-width: 280px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+
 }
 
 .icons {
@@ -246,71 +256,17 @@ a, a:hover {
 
 .footing_text {
     font-family: 'Baloo 2';
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color:dimgrey;
     padding: 0 0.5rem
 }
 
-@media (max-width: 991px) {
-    .listing_img_cont {
-        align-items: center;
-    }
-    .listing_card {
-        max-height: 265px;
-    }
-    .footing {       
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-        margin-right: 0.5rem;
-    }
-    .footing_text {
-        font-size: 1rem;
-    }
-    .listing_card:hover {
-        .listing_img {
-            transition: .5s;
-            transform: scale(1.07);
-        }
-    }
-    .listing_img_cont {
-        overflow: hidden;
-    }
-    .listing_card_content {
-        padding: 0 0 0 0.5rem;
-    }
-
-    .listing_last_row {
-        flex-wrap: wrap;
-    }
-
-}
-
-
-
-@media (max-width: 767px) {
-    .listing_img_cont {
-        justify-content: center;
-        width: 100%;
-    }
-    .footing_text {
-        font-size: 1.5rem;
-    }
-    .listing_card {
-        max-height: 100%;
-    }
-
-    .listing_card_content {
-        padding: 1rem;
-    }
-    .listing_card:hover {
-        .listing_img {
-            transition: 0;
-            transform: scale(1) 
-        }
-    }
-}
-
 .card_creator {
     display: flex;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
 }

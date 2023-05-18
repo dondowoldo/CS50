@@ -63,7 +63,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container-fluid">
         {% if form.non_field_errors %}
         <ul>
         {% for error in form.non_field_errors %}
@@ -77,11 +77,12 @@
             <div class="listing_card">
                 <div class="listing_img_cont">
                     <img class="listing_img" src="{{ listing.imageurl}}">
-                </div>
-                <div class="listing_card_content">
                     <div class="property_title_cont">
                         <h1 class="card_heading">{{ listing.title }}</h1>
                     </div>
+                </div>
+                <div class="listing_card_content">
+
                     <div class="info">
                         <ul style="padding: 0; list-style-type: none;">
                             <li style="padding: 0; margin: 0;"><span class="heading">{{ listing.location }}</span></li>
