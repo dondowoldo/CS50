@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    background-attachment: fixed;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+}
+
+.heading {
+    background-image: linear-gradient(to right, #52248f, #1cb5e0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.container {
+    color:white;
+}
+
+.nav_top {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    align-items: center;
+    padding: 0.5rem;
+    padding-bottom: 3rem;
+    flex-wrap: nowrap;
+}
+
+.right_nav {
+    display: flex;
+}
+
+.anonymous_right_nav {
+    color:white;
+}
+
+@media (max-width: 413px) {
+    .anonymouseimg {
+        display:none;
+    }
+}
+
+.panel_img:hover {
+    filter: invert(29%) sepia(34%) saturate(560%) hue-rotate(153deg) brightness(95%) contrast(97%);
+    transition: .3s;
+}
+
+    /* Logged in user dropdown */
+.dropdown-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2b98c7;
+}
+
+#logout_li:hover {
+    #logout_img {
+        filter: brightness(0) saturate(100%) invert(29%) sepia(53%) saturate(7288%) hue-rotate(348deg) brightness(108%) contrast(94%);
+    }
+}
+

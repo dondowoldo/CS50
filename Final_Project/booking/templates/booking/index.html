@@ -90,7 +90,7 @@
                             <div class="listing_last_row">
                                 <li><span class="heading">${{ listing.price_per_night |floatformat:2 }} / night</span></li>
                                 <li>
-                                    <a class="btn btn-outline-secondary" id="details_button" href="#DetailsPage">Details</a>
+                                    <a class="btn btn-outline-secondary" id="details_button" href="{% url 'booking:detail' listing.id %}">Details</a>
                                     <a class="btn btn-outline-success" href="#BookPage">Book Now!</a>  
                                 </li>
                             </div>
