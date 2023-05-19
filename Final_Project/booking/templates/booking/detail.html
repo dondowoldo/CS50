@@ -1,11 +1,5 @@
 {% extends "booking/base.html" %}
 {% load static %}
-{% block add_css %}
-    {% with include_separate_css=True %}
-        {{ block.super }}
-    {% endwith %}
-    <link href="{% static 'booking/detail.css' %}" rel="stylesheet">
-{% endblock %}
 
 {% block title %}
     {{ listing.title }}
