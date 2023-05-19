@@ -1,16 +1,24 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import PropertyFilter, AddProperty
-from .models import Listing
+from .models import Listing, User, PropertyType
 from datetime import date, timedelta
 from django.db.models import Q
+from django.conf import settings
+import requests
+import json
+import googlemaps
+import folium
+import geocoder
 
-from .models import User, PropertyType
+
+# gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
+
 
 def login_view(request):
     if request.method == "POST":
@@ -123,6 +131,9 @@ def addProperty(request):
         if form.is_valid():
             complete_form = form.save(commit=False)
             complete_form.creator = request.user
+            geocode = geocoder.osm(complete_form.location)
+            complete_form.geolat = geocode.lat
+            complete_form.geolng = geocode.lng
             complete_form.save()
             return HttpResponseRedirect(reverse("booking:index"))
         else:
@@ -132,11 +143,29 @@ def addProperty(request):
         
 def detail_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
+    print(listing.geocode.lat)
+    geolocation = Listing.objecs.get(id=listing_id).gps_location
+
+    country = geolocation.country
+    lat = geolocation.lat
+    lng = geolocation.lng
+
+
+    geomap = folium.Map([50.0874654, 14.4212535], tooltip='Click for more', popup=country, zoom_start=6)
+    folium.Marker([lat, lng]).add_to(geomap)
+    geomap = geomap._repr_html_()
+
+    # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+    # print(reverse_geocode_result)
+    # geocode_result = gmaps.geocode("Plantáž 402, 250 01 Brandýs nad Labem-Stará Boleslav, Česko")
+    # print(geocode_result)
 
     if request.method == "GET":
         return render(request, "booking/detail.html", {
-            "listing": listing
+            "listing": listing,
+            "geomap": geomap
         })
     
     else:
         return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
+    

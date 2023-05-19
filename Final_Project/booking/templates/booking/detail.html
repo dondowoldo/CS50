@@ -8,10 +8,70 @@
 
 
 {% block body %}
-<div class="container">
-    
-    {{ listing.title }}
-    
+
+<div class="details_container">
+        <div class="details_sections">
+            <img src="{{ listing.imageurl }}" style="max-width: 100%; border-radius: 1rem 1rem 0 0;">
+            
+            <div class="details_info">
+                <div class="left_column">
+                    <ul style="padding: 0; list-style-type: none;">
+                        <li>Price per night</li>
+                        <li>Location</li>
+                        <li>Property type</li>
+                        <li>Available to</li>
+                        <li>Max nights total</li>
+
+                    </ul>
+                </div>
+                <div class="right_column">
+                    <ul style="padding: 0; list-style-type: none;">
+                        <li>${{ listing.price_per_night |floatformat:2 }}</li>
+                        <li>{{ listing.location }}</li>
+                        <li>{{ listing.type }}</li>
+                        <li>{{ listing.availability_to }}</li>
+                        <li>6 nights (TODO)</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <hr style="padding:0; margin:0 0 0 0; width: 100%">
+            <div class="details_info">
+                <div class="left_column">
+                    <ul style="padding: 0; list-style-type: none;">
+                        <li>Published</li>
+                        <li>Landlord</li>
+                    </ul>
+                </div>
+                <div class="right_column">
+                    <ul style="padding: 0; list-style-type: none;">
+                        <li>{{ listing.date_created.date }}</li>
+                        <li>{{ listing.creator }}</li>
+                    </ul>
+                </div>
+            </div>
+                {{ geomap |safe }}
+            
+        </div>
+
+
+
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
