@@ -11,13 +11,19 @@
 
 <div class="details_container">
         <div class="details_sections">
-            <img src="{{ listing.imageurl }}" style="max-width: 100%; border-radius: 1rem 1rem 0 0;">
+            <div class="details_img_container">
+                <img src="{{ listing.imageurl }}" id="details_img">
+                <div class="map_button_container">
+                    <a href="#button" ><button id="map_button">View on Map</button></a>
+                </div>
+            </div>
+            <div class="details_title">{{ listing.title }}</div>
             
             <div class="details_info">
                 <div class="left_column">
                     <ul style="padding: 0; list-style-type: none;">
                         <li>Price per night</li>
-                        <li>Location</li>
+                        <li>City</li>
                         <li>Property type</li>
                         <li>Available to</li>
                         <li>Max nights total</li>
@@ -35,7 +41,6 @@
                 </div>
 
             </div>
-
             <hr style="padding:0; margin:0 0 0 0; width: 100%">
             <div class="details_info">
                 <div class="left_column">
@@ -49,15 +54,9 @@
                         <li>{{ listing.date_created.date }}</li>
                         <li>{{ listing.creator }}</li>
                     </ul>
-                </div>
+                </div>    
             </div>
-                {{ geomap |safe }}
-            
         </div>
-
-
-
-
 </div>
 
 

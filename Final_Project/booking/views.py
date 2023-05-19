@@ -143,22 +143,13 @@ def addProperty(request):
         
 def detail_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
-    print(listing.geocode.lat)
-    geolocation = Listing.objecs.get(id=listing_id).gps_location
-
-    country = geolocation.country
-    lat = geolocation.lat
-    lng = geolocation.lng
+    
+    
 
 
-    geomap = folium.Map([50.0874654, 14.4212535], tooltip='Click for more', popup=country, zoom_start=6)
-    folium.Marker([lat, lng]).add_to(geomap)
+    geomap = folium.Map([listing.geolat, listing.geolng], zoom_start=10)
+    folium.Marker([listing.geolat, listing.geolng]).add_to(geomap)
     geomap = geomap._repr_html_()
-
-    # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
-    # print(reverse_geocode_result)
-    # geocode_result = gmaps.geocode("Plantáž 402, 250 01 Brandýs nad Labem-Stará Boleslav, Česko")
-    # print(geocode_result)
 
     if request.method == "GET":
         return render(request, "booking/detail.html", {
