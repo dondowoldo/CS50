@@ -1,25 +1,16 @@
 {% extends "booking/base.html" %}
 {% load static %}
-<<<<<<< Updated upstream
-
-=======
 {% block add_css %}
     {% with include_separate_css=True %}
         {{ block.super }}
     {% endwith %}
     <link href="{% static 'booking/detail.css' %}" rel="stylesheet">
 {% endblock %}
->>>>>>> Stashed changes
 
 {% block title %}
     {{ listing.title }}
 {% endblock %}
 
-<<<<<<< Updated upstream
-{% block body %}
-
-<p style="color:white">{{ listing.title }}</p>
-=======
 
 
 {% block body %}
@@ -28,6 +19,5 @@
     {{ listing.title }}
     
 </div>
->>>>>>> Stashed changes
 
 {% endblock %}
