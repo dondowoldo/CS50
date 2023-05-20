@@ -12,10 +12,28 @@
 <div class="details_container">
         <div class="details_sections">
             <div class="details_img_container">
-                <img src="{{ listing.imageurl }}" id="details_img">
+                {% if not submitted %}
+                    {% if not listing.imageurl %}
+                        <img src="{% static 'booking/noimage.jpg' %}" id="details_img">
+                    {% else %}
+                        <img src="{{ listing.imageurl }}" id="details_img">
+                    {% endif %}
                 <div class="map_button_container">
-                    <a href="#button" ><button id="map_button">View on Map</button></a>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="submitted" value="submitted" id="map_button">View on Map</button>
+                        </form>
+                    </div>
+                {% else %}
+                <div class="map_holder">
+                    {{ geomap|safe }}
                 </div>
+                <div class="exit_map">
+                    <a href="{% url 'booking:detail' listing.id %}">
+                        <button class="btn btn-info" style="margin: 0.5em; font-family: 'Baloo 2'">Exit Map View</button>
+                    </a>
+                </div>
+                {% endif %} 
             </div>
             <div class="details_title">{{ listing.title }}</div>
             
@@ -32,11 +50,11 @@
                 </div>
                 <div class="right_column">
                     <ul style="padding: 0; list-style-type: none;">
-                        <li>${{ listing.price_per_night |floatformat:2 }}</li>
-                        <li>{{ listing.location }}</li>
-                        <li>{{ listing.type }}</li>
-                        <li>{{ listing.availability_to }}</li>
-                        <li>6 nights (TODO)</li>
+                        <li class="right_col_li">${{ listing.price_per_night |floatformat:2 }}</li>
+                        <li class="right_col_li">{{ listing.location }}</li>
+                        <li class="right_col_li">{{ listing.type }}</li>
+                        <li class="right_col_li">{{ listing.availability_to }}</li>
+                        <li class="right_col_li">6 nights (TODO)</li>
                     </ul>
                 </div>
 
@@ -51,11 +69,26 @@
                 </div>
                 <div class="right_column">
                     <ul style="padding: 0; list-style-type: none;">
-                        <li>{{ listing.date_created.date }}</li>
-                        <li>{{ listing.creator }}</li>
+                        <li class="right_col_li">{{ listing.date_created.date }}</li>
+                        <li class="right_col_li">{{ listing.creator }}</li>
                     </ul>
                 </div>    
             </div>
+
+            <div class="details_final_info">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                        <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
+                        <button class="btn btn-info final_button" id="message_button" name="message" value="message">
+                            <img src="{% static 'booking/message-square.svg' %}">Message Landlord
+                        </button>
+                </form>
+
+            </div>
+
+
+
+
         </div>
 </div>
 

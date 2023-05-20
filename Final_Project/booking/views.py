@@ -142,21 +142,32 @@ def addProperty(request):
             })
         
 def detail_view(request, listing_id):
+    
+    submitted = False
+    
     listing = Listing.objects.get(id=listing_id)
-    
-    
-
-
     geomap = folium.Map([listing.geolat, listing.geolng], zoom_start=10)
     folium.Marker([listing.geolat, listing.geolng]).add_to(geomap)
     geomap = geomap._repr_html_()
 
     if request.method == "GET":
+        
         return render(request, "booking/detail.html", {
             "listing": listing,
-            "geomap": geomap
+            "geomap": geomap,
+            "submitted": submitted
         })
     
     else:
-        return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
+        if request.POST.get("submitted"):
+            submitted = True
+            
+            return render(request, "booking/detail.html", {
+            "listing": listing,
+            "geomap": geomap,
+            "submitted": submitted
+        })
+
+        else:
+            return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
     

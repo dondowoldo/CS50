@@ -34,10 +34,6 @@
                     
                         <form action="" method="POST" style="min-width: 260px; max-width: 500px;">
                             {% csrf_token %}
-                                
-                                
-
-
                             {% for field in form %}
                                 {% if field == form.price_per_night %}
                                     <div class="input-group" style="margin-top: 1.5rem">
@@ -76,7 +72,11 @@
             {% for listing in listings %}
             <div class="listing_card">
                 <div class="listing_img_cont">
+                    {% if not listing.imageurl %}
+                    <img class="listing_img" src="{% static 'booking/noimage.jpg' %}">
+                    {% else %}
                     <img class="listing_img" src="{{ listing.imageurl}}">
+                    {% endif %}
                     <div class="property_title_cont">
                         <a href="{% url 'booking:detail' listing.id %}"><h1 class="card_heading">{{ listing.title }}</h1></a>
                     </div>
