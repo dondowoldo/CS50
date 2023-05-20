@@ -10,89 +10,112 @@
 {% block body %}
 
 <div class="details_container">
-        <div class="details_sections">
-            <div class="details_img_container">
-                {% if not submitted %}
-                    {% if not listing.imageurl %}
-                        <img src="{% static 'booking/noimage.jpg' %}" id="details_img">
-                    {% else %}
-                        <img src="{{ listing.imageurl }}" id="details_img">
-                    {% endif %}
-                <div class="map_button_container">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <button type="submit" name="submitted" value="submitted" id="map_button">View on Map</button>
-                        </form>
-                    </div>
+    <div class="details_sections">
+        <div class="details_img_container">
+            {% if not submitted %}
+                {% if not listing.imageurl %}
+                    <img src="{% static 'booking/noimage.jpg' %}" id="details_img">
                 {% else %}
-                <div class="map_holder">
-                    {{ geomap|safe }}
+                    <img src="{{ listing.imageurl }}" id="details_img">
+                {% endif %}
+            <div class="map_button_container">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="submitted" value="submitted" id="map_button">View on Map</button>
+                    </form>
                 </div>
-                <div class="exit_map">
-                    <a href="{% url 'booking:detail' listing.id %}">
-                        <button class="btn btn-info" style="margin: 0.5em; font-family: 'Baloo 2'">Exit Map View</button>
-                    </a>
-                </div>
-                {% endif %} 
+            {% else %}
+            <div class="map_holder">
+                {{ geomap|safe }}
             </div>
-            <div class="details_title">{{ listing.title }}</div>
-            
-            <div class="details_info">
-                <div class="left_column">
-                    <ul style="padding: 0; list-style-type: none;">
-                        <li>Price per night</li>
-                        <li>City</li>
-                        <li>Property type</li>
-                        <li>Available to</li>
-                        <li>Max nights total</li>
-
-                    </ul>
-                </div>
-                <div class="right_column">
-                    <ul style="padding: 0; list-style-type: none;">
-                        <li class="right_col_li">${{ listing.price_per_night |floatformat:2 }}</li>
-                        <li class="right_col_li">{{ listing.location }}</li>
-                        <li class="right_col_li">{{ listing.type }}</li>
-                        <li class="right_col_li">{{ listing.availability_to }}</li>
-                        <li class="right_col_li">6 nights (TODO)</li>
-                    </ul>
-                </div>
-
+            <div class="exit_map">
+                <a href="{% url 'booking:detail' listing.id %}">
+                    <button class="btn btn-info" style="margin: 0.5em; font-family: 'Baloo 2'">Exit Map View</button>
+                </a>
             </div>
-            <hr style="padding:0; margin:0 0 0 0; width: 100%">
-            <div class="details_info">
-                <div class="left_column">
-                    <ul style="padding: 0; list-style-type: none;">
-                        <li>Published</li>
-                        <li>Landlord</li>
-                    </ul>
-                </div>
-                <div class="right_column">
-                    <ul style="padding: 0; list-style-type: none;">
-                        <li class="right_col_li">{{ listing.date_created.date }}</li>
-                        <li class="right_col_li">{{ listing.creator }}</li>
-                    </ul>
-                </div>    
+            {% endif %} 
+        </div>
+        <div class="details_title">
+            {{ listing.title }}
+            <div class="details_heart">
+                <img id="heart_img" src="{% static 'booking/heart_32_grey.svg' %}">
+            </div>
+        </div>
+        <hr style="padding:0; margin:0 0 0 0; width: 100%">   
+
+        <div class="details_info">
+            <div class="left_column">
+                <ul style="padding: 0; list-style-type: none;">
+                    <li>Price per night</li>
+                    <li>City</li>
+                    <li>Property type</li>
+                    <li>Available to</li>
+                    <li>Max nights total</li>
+
+                </ul>
+            </div>
+            <div class="right_column">
+                <ul style="padding: 0; list-style-type: none;">
+                    <li class="right_col_li">${{ listing.price_per_night |floatformat:2 }}</li>
+                    <li class="right_col_li">{{ listing.location }}</li>
+                    <li class="right_col_li">{{ listing.type }}</li>
+                    <li class="right_col_li">{{ listing.availability_to }}</li>
+                    <li class="right_col_li">6 nights (TODO)</li>
+                </ul>
             </div>
 
-            <div class="details_final_info">
-                <form action="" method="POST">
-                    {% csrf_token %}
-                        <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
-                        <button class="btn btn-info final_button" id="message_button" name="message" value="message">
-                            <img src="{% static 'booking/message-square.svg' %}">Message Landlord
-                        </button>
-                </form>
-
+        </div>
+        <hr style="padding:0; margin:0 0 0 0; width: 100%">
+        <div class="details_info">
+            <div class="left_column">
+                <ul style="padding: 0; list-style-type: none;">
+                    <li>Published</li>
+                    <li>Landlord</li>
+                </ul>
             </div>
+            <div class="right_column">
+                <ul style="padding: 0; list-style-type: none;">
+                    <li class="right_col_li">{{ listing.date_created.date }}</li>
+                    <li class="right_col_li">{{ listing.creator }}</li>
+                </ul>
+            </div>    
+        </div>
 
+        <div class="details_description">
+            <p class="description">
+                <span style="color: #48494B; font-family:'Baloo 2'; font-size: calc(16px + 0.6vw); margin-right: 1rem;"><i>Description: </i></span>
+                {{ listing.description }}</p>
+        </div>
 
+        <div class="details_final_info">
+            <form action="" method="POST">
+                {% csrf_token %}
+                    <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
+                    <button class="btn btn-info final_button" id="message_button" name="message" value="message">
+                        <img src="{% static 'booking/message-square.svg' %}">Message Landlord
+                    </button>
+            </form>          
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid comments_container">
+    <div class="comments_window">
+        <div class="comments">
 
 
         </div>
+
+        <div class="add_comment">
+
+
+        </div>
+
+
+    </div>
+
+
 </div>
-
-
 
 
 

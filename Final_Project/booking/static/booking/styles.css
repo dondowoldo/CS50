@@ -313,10 +313,6 @@ a, a:hover {
 
 .left_column {
     margin-left: 1rem;
-    /* background-image: linear-gradient(to right, #52248f, #1cb5e0);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent; */
     color: #48494B;
     display: flex;
 }
@@ -394,12 +390,32 @@ a, a:hover {
     background-clip: text;
     -webkit-background-clip: text;
     color:transparent;
-    font-size: calc(13px + 1.4vw);
+    font-size: calc(16px + 1.6vw);
     font-family: 'Josefin Sans', sans-serif;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width:100%;
+    padding:0 1rem 0 1rem;
+}
 
+.details_heart{
+    display: flex;
+}
+
+#heart_img {
+    transition: 0.3s;
+}
+
+#heart_img_followed {
+    filter: brightness(0) saturate(100%) invert(32%) sepia(55%) saturate(1801%) hue-rotate(331deg) brightness(88%) contrast(96%);
+}
+
+.details_heart:hover {
+    #heart_img {
+        transition: 0.3s;
+        transform: scale(1.2);
+        filter: brightness(0) saturate(100%) invert(32%) sepia(55%) saturate(1801%) hue-rotate(331deg) brightness(88%) contrast(96%);
+    }
 }
 
 .map_holder {
@@ -418,22 +434,29 @@ a, a:hover {
     justify-content: flex-start;
 }
 
+
+.details_description {
+    margin: 0 1rem 0 1rem;
+    display: flex;
+    min-height: calc(20px + 10vh);
+    border: 1px solid grey;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+
 .details_final_info {
     display: flex;
     flex-direction: row;
     row-gap: 5rem;
     flex-wrap: nowrap;
-    padding: 0 0 1rem 0;
+    padding: 1rem 0 1rem 0;
     border-radius: 0 0 1rem 1rem;
     justify-content: space-between;
 }
 
-.details_final_info > button {
-    margin-left: 0.5rem
-}
-
 .final_button {
-    margin-left: 0.5rem;
+    margin-left: 1rem;
 }
 .final_button:hover {
     transition: .5s;
@@ -446,3 +469,16 @@ a, a:hover {
     color: white;
     border: 0;
 }
+
+.details_description {
+    font-size: calc(12px + 0.7vw);
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.comments_window {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+

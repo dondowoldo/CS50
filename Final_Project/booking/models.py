@@ -20,11 +20,11 @@ class Listing(models.Model):
     type = models.ForeignKey(PropertyType, on_delete=models.CASCADE, null=True, related_name="property_type")
     active = models.BooleanField(default=True)
     imageurl = models.URLField(max_length=300, blank=True)
-    location = models.CharField(max_length=30)
+    location = models.CharField(max_length=20)
     geolat = models.FloatField(max_length=150)
     geolng = models.FloatField(max_length=150)
     watchlist = models.ManyToManyField(User, blank=True, related_name="watching")
-    description = models.TextField(max_length=150)
+    description = models.TextField(max_length=300)
     availability_from = models.DateField()
     availability_to = models.DateField()
 

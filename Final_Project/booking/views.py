@@ -168,6 +168,22 @@ def detail_view(request, listing_id):
             "submitted": submitted
         })
 
+        elif request.POST.get("book"):
+            return HttpResponseRedirect(reverse("booking:book", args=[listing.id]))
+
+
         else:
             return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
     
+
+def book_view(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+
+    if request.method == "GET":
+        return render(request, "booking/book.html", {
+            "listing": listing
+        })
+    
+    else:
+        return HttpResponseRedirect(reverse("booking:index"))
+
