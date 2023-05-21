@@ -8,19 +8,26 @@
 
 
 {% block body %}
-
+<center><h1 class="heading" style="font-size: max(4vw, 40px);">Comments</h1><br/></center>
 <div class="comments_container">
     <div class="comments_window">      
-        <div class="comments">
             {% if comments %}
                 {% for comment in comments %}
-                    <p>{{ comment.comment }}</p>
-                    <p>{{ comment.user }}</p>
-                    <p>{{ comment.listing.title }}</p>
-                    <p>{{ comment.timestamp|timesince }} ago</p>
+                
+                <div class="comments">
+                    <div class="comment">
+                        {{ comment.comment }}
+                    </div>
+                    
+                    <div class="comment_creator">
+                            <div>{{ comment.user}}</div>
+                            <div>{{ comment.timestamp| timesince }} ago</div>
+                    </div>
+                </div>
+                
                 {% endfor %}
             {% endif %}
-        </div>
+        
     
     <div class="paginator">
         {% if comments.has_previous %}
@@ -39,15 +46,15 @@
     </div>    
 
 
-        <form action="" method="POST">
-            <div class="add_comment">
-                {% csrf_token %}
-                {{ comment_form }}  
-            </div>
-            <div class="comment_submit_section">
-                <button class="btn btn-success" type="submit" name="sub_comment" value="sub_comment">Post Comment</button>
-            </div>
-        </form>
+            <form action="" method="POST">
+                <div class="add_comment">W
+                    {% csrf_token %}
+                    {{ comment_form }}  
+                </div>
+                <div class="comment_submit_section">
+                    <button class="btn btn-success" type="submit" name="sub_comment" value="sub_comment">Post Comment</button>
+                </div>
+            </form>
 
     </div>
 

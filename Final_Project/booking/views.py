@@ -181,7 +181,7 @@ def detail_view(request, listing_id):
 def comments_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     comments_desc = Comment.objects.filter(listing__id=listing_id).order_by("-timestamp")
-    paginator = Paginator(comments_desc, 2)
+    paginator = Paginator(comments_desc, 4)
     page = request.GET.get('page')
     comments = paginator.get_page(page)
     comment_form = PostComment()

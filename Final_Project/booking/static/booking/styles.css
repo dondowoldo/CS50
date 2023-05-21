@@ -481,6 +481,12 @@ a, a:hover {
     padding: 2rem 0;
 }
 
+.comment {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
 .comments_window {
     display: flex;
     flex-direction: column;
@@ -488,8 +494,8 @@ a, a:hover {
     max-width: 1000px;
     border-radius: 1rem 1rem 1rem 1rem;
     background-color: #e1e5ea;
-    height: 600px;
     padding: 1rem;
+    gap: 1rem;
 }
 
 .add_comment {
@@ -503,8 +509,35 @@ a, a:hover {
 }
 
 .comments {
+    width: 100%;
+    border: 1px solid grey;
+    border-radius: 1rem;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.comment {
+    display: flex;
+
+}
+
+.comment_creator {
+    display: flex;
+    justify-content: space-between;
+    color: #48494B;
+    font-family: 'Baloo 2';
+    padding: 0 0.5rem 0 0.5rem;
+}
 
 
+.comment_prepend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-right: 2em;
 }
 
 .paginator {
