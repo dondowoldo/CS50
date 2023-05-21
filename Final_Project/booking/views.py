@@ -148,47 +148,71 @@ def addProperty(request):
         
 def detail_view(request, listing_id):
     submitted = False   # Check if user clicked on view on map button and if so, render map instead of image
-    
-    listing = Listing.objects.get(id=listing_id)
-    comments = Comment.objects.filter(listing__id=listing_id).order_by("-timestamp")
 
+    listing = Listing.objects.get(id=listing_id)
     geomap = folium.Map([listing.geolat, listing.geolng], zoom_start=10)
     folium.Marker([listing.geolat, listing.geolng]).add_to(geomap)
     geomap = geomap._repr_html_()
-    comment_form = PostComment()
-
-    context = {
+    
+    if request.method == "GET":
+        
+        return render(request, "booking/detail.html", {
             "listing": listing,
             "geomap": geomap,
-            "submitted": submitted,
-            "comment_form": comment_form,
-            "comments": comments
-        }
-
-    if request.method == "GET":
-        return render(request, "booking/detail.html", context)
+            "submitted": submitted
+        })
     
     else:
         if request.POST.get("submitted"):
             submitted = True   
-            return render(request, "booking/detail.html", context)
+            return render(request, "booking/detail.html", {
+            "listing": listing,
+            "geomap": geomap,
+            "submitted": submitted
+        })
 
         elif request.POST.get("book"):
             return HttpResponseRedirect(reverse("booking:book", args=[listing.id]))
+                  
+        else:
+            return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
+    
 
-        elif request.POST.get("sub_comment"):
+def comments_view(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    comments_desc = Comment.objects.filter(listing__id=listing_id).order_by("-timestamp")
+    paginator = Paginator(comments_desc, 2)
+    page = request.GET.get('page')
+    comments = paginator.get_page(page)
+    comment_form = PostComment()
+
+    if request.method == "GET":
+        return render(request, "booking/comments.html", {
+            "listing": listing,
+            "comments": comments,
+            "comment_form": comment_form
+        })
+
+    else:
+        if request.POST.get("sub_comment"):
             comment_form = PostComment(request.POST)
             if comment_form.is_valid():
                 complete_comment = comment_form.save(commit=False)
                 complete_comment.user = request.user
                 complete_comment.listing = listing
                 complete_comment.save()
-                return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
+                return HttpResponseRedirect(reverse("booking:comments", args=[listing.id])) 
             else: 
-                return render(request, "booking/detail.html", context, {"listing_id": listing.id})                   
-        else:
-            return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
-    
+                return render(request, "booking/comments.html", {
+                    "listing_id": listing.id,
+                    "comment_form": comment_form,
+                    "comments": comments,
+                    "listing": listing
+                    })   
+        else: 
+            return HttpResponseRedirect(reverse("booking:comments", args=[listing.id]))  
+
+
 
 def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)

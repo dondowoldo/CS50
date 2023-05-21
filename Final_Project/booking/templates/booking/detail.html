@@ -90,53 +90,14 @@
         <div class="details_final_info">
             <form action="" method="POST">
                 {% csrf_token %}
-                    <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
-                    <button class="btn btn-info final_button" id="message_button" name="message" value="message">
-                        <img src="{% static 'booking/message-square.svg' %}">Message Landlord
-                    </button>
-            </form>          
+                <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
+                <button class="btn btn-info final_button" id="message_button" name="message" value="message">
+                    <img src="{% static 'booking/message-square.svg' %}">Message Landlord
+                </button>
+            </form>
+            <a href="{% url 'booking:comments' listing.id %}"><button class="btn btn-info final_button" id="comments_button" name="comments_button">Comments</button></a>
         </div>
     </div>
 </div>
-
-<div class="comments_container">
-    <div class="comments_window">
-        
-        <form action="" method="POST">
-            <div class="add_comment">
-                {% csrf_token %}
-                {{ comment_form }}  
-            </div>
-            <div class="comment_submit_section">
-                <button class="btn btn-success" type="submit" name="sub_comment" value="sub_comment">Post Comment</button>
-            </div>
-        </form>
-
-        <div class="comments">
-            {% if comments %}
-                {% for comment in comments %}
-                    <p>{{ comment.comment }}</p>
-                    <p>{{ comment.user }}</p>
-                    <p>{{ comment.listing.title }}</p>
-                    <p>{{ comment.timestamp|timesince }} ago</p>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-    </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 {% endblock %}

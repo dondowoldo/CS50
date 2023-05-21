@@ -1,0 +1,56 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ listing.title }}
+{% endblock %}
+
+
+
+{% block body %}
+
+<div class="comments_container">
+    <div class="comments_window">      
+        <div class="comments">
+            {% if comments %}
+                {% for comment in comments %}
+                    <p>{{ comment.comment }}</p>
+                    <p>{{ comment.user }}</p>
+                    <p>{{ comment.listing.title }}</p>
+                    <p>{{ comment.timestamp|timesince }} ago</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    
+    <div class="paginator">
+        {% if comments.has_previous %}
+            <a href="?page=1">&laquo First</a>
+            <a href="?page={{ comments.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% if comments.paginator.num_pages > 1 %}
+            Page {{ comments.number }} of {{ comments.paginator.num_pages }}
+        {% endif %}
+
+        {% if comments.has_next %}
+            <a href="?page={{ comments.next_page_number }}">Next</a>
+            <a href="?page={{ comments.paginator.num_pages }}">Last &raquo</a>
+        {% endif %}
+    </div>    
+
+
+        <form action="" method="POST">
+            <div class="add_comment">
+                {% csrf_token %}
+                {{ comment_form }}  
+            </div>
+            <div class="comment_submit_section">
+                <button class="btn btn-success" type="submit" name="sub_comment" value="sub_comment">Post Comment</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
