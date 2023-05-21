@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import PropertyFilter, AddProperty
-from .models import Listing, User, PropertyType
+from .models import Listing, User, PropertyType, AvailableDate
 from datetime import date, timedelta
 from django.db.models import Q
 from django.conf import settings
@@ -133,8 +133,14 @@ def addProperty(request):
             complete_form.creator = request.user
             geocode = geocoder.osm(complete_form.location)
             complete_form.geolat = geocode.lat
-            complete_form.geolng = geocode.lng
+            complete_form.geolng = geocode.lng    
             complete_form.save()
+            
+            date_list = get_initial_dates(complete_form.availability_from, complete_form.availability_to)
+            for mydate in date_list:
+                date_entry, created = AvailableDate.objects.get_or_create(date=mydate)
+                complete_form.available_dates.add(date_entry)
+
             return HttpResponseRedirect(reverse("booking:index"))
         else:
             return render(request, "booking/add.html", {
@@ -178,11 +184,6 @@ def detail_view(request, listing_id):
 
 def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
-
-    start = listing.availability_from
-    end = listing.availability_to
-
-    get_initial_dates(start, end)
 
     if request.method == "GET":
         return render(request, "booking/book.html", {

@@ -27,6 +27,7 @@ class Listing(models.Model):
     description = models.TextField(max_length=300)
     availability_from = models.DateField()
     availability_to = models.DateField()
+    available_dates = models.ManyToManyField('AvailableDate', blank=True, related_name="availability")
 
     def __str__(self):
         return f"{self.title} : {self.price_per_night} : {self.location}"
@@ -60,3 +61,10 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.user} : {self.listing}, {self.timestamp}, {self.duration}, {self.total_price}"
+
+
+class AvailableDate(models.Model):
+    date = models.DateField()
+    
+    def __str__(self):
+        return f"{self.date}"
