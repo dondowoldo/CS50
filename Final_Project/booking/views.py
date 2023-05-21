@@ -179,6 +179,11 @@ def detail_view(request, listing_id):
 def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
 
+    start = listing.availability_from
+    end = listing.availability_to
+
+    get_initial_dates(start, end)
+
     if request.method == "GET":
         return render(request, "booking/book.html", {
             "listing": listing
@@ -187,3 +192,17 @@ def book_view(request, listing_id):
     else:
         return HttpResponseRedirect(reverse("booking:index"))
 
+
+## Helper func that gets 2 dates and returns a list of all dates in interval
+
+def get_initial_dates(start_date, end_date):
+    available_dates =  []
+    available_dates.append(start_date)
+    new_date = start_date
+  
+    for date in range((end_date - start_date + timedelta(days=1)).days):
+        if new_date == end_date:
+            return available_dates
+        else:
+            new_date += timedelta(days=1)
+            available_dates.append(new_date)
