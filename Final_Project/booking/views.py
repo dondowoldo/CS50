@@ -5,16 +5,14 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import PropertyFilter, AddProperty
-from .models import Listing, User, PropertyType, AvailableDate
+from .forms import PropertyFilter, AddProperty, PostComment
+from .models import Listing, User, PropertyType, AvailableDate, Comment
 from datetime import date, timedelta
 from django.db.models import Q
 from django.conf import settings
-import requests
-import json
-import googlemaps
 import folium
 import geocoder
+from django.core.paginator import Paginator
 
 
 # gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
@@ -149,36 +147,45 @@ def addProperty(request):
             })
         
 def detail_view(request, listing_id):
-    
-    submitted = False
+    submitted = False   # Check if user clicked on view on map button and if so, render map instead of image
     
     listing = Listing.objects.get(id=listing_id)
+    comments = Comment.objects.filter(listing__id=listing_id).order_by("-timestamp")
+
     geomap = folium.Map([listing.geolat, listing.geolng], zoom_start=10)
     folium.Marker([listing.geolat, listing.geolng]).add_to(geomap)
     geomap = geomap._repr_html_()
+    comment_form = PostComment()
 
-    if request.method == "GET":
-        
-        return render(request, "booking/detail.html", {
+    context = {
             "listing": listing,
             "geomap": geomap,
-            "submitted": submitted
-        })
+            "submitted": submitted,
+            "comment_form": comment_form,
+            "comments": comments
+        }
+
+    if request.method == "GET":
+        return render(request, "booking/detail.html", context)
     
     else:
         if request.POST.get("submitted"):
-            submitted = True
-            
-            return render(request, "booking/detail.html", {
-            "listing": listing,
-            "geomap": geomap,
-            "submitted": submitted
-        })
+            submitted = True   
+            return render(request, "booking/detail.html", context)
 
         elif request.POST.get("book"):
             return HttpResponseRedirect(reverse("booking:book", args=[listing.id]))
 
-
+        elif request.POST.get("sub_comment"):
+            comment_form = PostComment(request.POST)
+            if comment_form.is_valid():
+                complete_comment = comment_form.save(commit=False)
+                complete_comment.user = request.user
+                complete_comment.listing = listing
+                complete_comment.save()
+                return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
+            else: 
+                return render(request, "booking/detail.html", context, {"listing_id": listing.id})                   
         else:
             return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
     

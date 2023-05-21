@@ -442,6 +442,8 @@ a, a:hover {
     border: 1px solid grey;
     border-radius: 1rem;
     padding: 0.5rem;
+    font-size: calc(12px + 0.7vw);
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 
@@ -470,15 +472,37 @@ a, a:hover {
     border: 0;
 }
 
-.details_description {
-    font-size: calc(12px + 0.7vw);
-    font-family: 'Josefin Sans', sans-serif;
+.comments_container {
+    width: 95%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
 }
 
 .comments_window {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
+    max-width: 1000px;
+    border-radius: 1rem 1rem 1rem 1rem;
+    background-color: #e1e5ea;
+    height: 500px;
+    padding: 1rem;
 }
 
+.add_comment {
+    display: flex;
+    width: 100%;
+    height: calc(100px + 5vh);
+}
+
+.comment_submit_section {
+    padding-top: 0.5rem;
+}
+
+/* .comments {
+
+
+} */

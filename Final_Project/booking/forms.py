@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Listing
+from .models import Listing, Comment
 from datetime import timedelta, datetime
 import geocoder
 #import pytz
@@ -133,3 +133,11 @@ class AddProperty(ModelForm):
             raise forms.ValidationError(errors)
            
         return cleaned_data
+    
+class PostComment(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("comment",)
+        labels = {"comment": '',}
+        widgets = {"comment": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your comment here...', 'style':'resize:none;'})}
+        
