@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from .models import Listing
 from datetime import timedelta, datetime
+import geocoder
 #import pytz
 
 # Set timezone if necessary
@@ -105,6 +106,7 @@ class AddProperty(ModelForm):
             "availability_from": DateInput(attrs={'class': 'form-control'}),
             "availability_to": DateInput(attrs={'class': 'form-control'}),
             "description": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description...'})
+
         }
     
     def clean(self):
@@ -112,8 +114,12 @@ class AddProperty(ModelForm):
         afrom = cleaned_data.get("availability_from")
         ato = cleaned_data.get("availability_to")
         price = cleaned_data.get("price_per_night")
+        location = cleaned_data.get("location")
         errors = []
         
+        geocode = geocoder.osm(location)
+        if not geocode:
+                errors.append(forms.ValidationError("Not a Valid location"))              
         if price <= 0:
             errors.append(forms.ValidationError("Invalid Price"))
 

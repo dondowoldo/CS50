@@ -136,6 +136,7 @@ def addProperty(request):
             complete_form.geolng = geocode.lng    
             complete_form.save()
             
+            # Get all available dates from list and check if dates are already in db. If not = create, if so = assign to an instance and save relationship
             date_list = get_initial_dates(complete_form.availability_from, complete_form.availability_to)
             for mydate in date_list:
                 date_entry, created = AvailableDate.objects.get_or_create(date=mydate)
