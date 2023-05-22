@@ -7,12 +7,12 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container" style="padding-bottom: 2rem;">
     <center><h1 class="heading" style="font-size: max(4vw, 40px);">Book Property</h1><br/></center> 
     <div class="book_form_window">
         <div class="book_img_and_info">
             <div class="book_image_cont">
-                <img src="{{ listing.imageurl }}" style="max-width: 100%; border-radius: 1rem 0 0 1rem; object-fit: cover;">
+                <img src="{{ listing.imageurl }}" style="max-width: 100%; border-radius: 1rem 0 0 0; object-fit: cover;">
             </div>
 
             <div class="book_info">
@@ -21,10 +21,36 @@
                     <center><p class="book_price">${{ listing.price_per_night|floatformat:2 }}/night</p></center>
                 </div>
                 <form action="" method="POST" class="book_form">
+                    {% csrf_token %}
                     {{ form }}
+                    <button class="btn btn-success" type="submit" value="quote "name="quote">Get quote</button>
                 </form>
             </div>
         </div>
+        {% if quoted %}
+            <div class="quote_card">
+                <div class="quote_card_row">
+                    <div>Booking from</div>
+                    <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
+                    <div>Booking to</div>
+                    <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
+                    <div>Total nights to spend</div>
+                    <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
+                    <div>Total cost</div>
+                    
+                </div>
+                <div class="quote_card_row">
+                    <div>{{ startdate }}</div>
+                    <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
+                    <div>{{ enddate }}</div>
+                    <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
+                    <div>{{ duration }}</div>
+                    <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">   
+                    <div>${{ price_total|floatformat:2 }}</div>
+                </div>
+
+            </div>
+        {% endif %}
     </div>
 
 </div>

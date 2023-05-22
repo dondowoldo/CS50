@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import PropertyFilter, AddProperty, PostComment, MakeBooking
 from .models import Listing, User, PropertyType, AvailableDate, Comment
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from django.db.models import Q
 from django.conf import settings
 import folium
@@ -218,6 +218,7 @@ def comments_view(request, listing_id):
 def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     form = MakeBooking()
+    quote_submitted = False
 
     if request.method == "GET":
         return render(request, "booking/book.html", {
@@ -227,7 +228,34 @@ def book_view(request, listing_id):
     
     else:
         form = MakeBooking(request.POST)
-        return HttpResponseRedirect(reverse("booking:index"))
+        if request.POST.get("quote"):
+            
+            startdate_obj = datetime.strptime(request.POST["startdate"], "%Y-%m-%d").date()
+            enddate_obj= datetime.strptime(request.POST["enddate"], "%Y-%m-%d").date()
+            selected_dates = get_initial_dates(startdate_obj, enddate_obj)
+            duration = len(selected_dates)
+            price_total = listing.price_per_night * duration
+
+
+            if form.is_valid():
+                quote_submitted = True
+                return render(request, "booking/book.html", {
+                    "listing": listing,
+                    "form": form,
+                    "quoted": quote_submitted,
+                    "selected_dates": selected_dates,
+                    "duration": duration,
+                    "startdate": startdate_obj,
+                    "enddate": enddate_obj,
+                    "price_total": price_total
+                })
+            else:
+                return render(request, "booking/book.html", {
+                    "listing": listing,
+                    "form": form,
+                })
+        else:
+            return HttpResponseRedirect(reverse("booking:index"))
 
 
 ## Helper func that gets 2 dates and returns a list of all dates in interval
