@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Listing, Comment
+from .models import Listing, Comment, Booking
 from datetime import timedelta, datetime
 import geocoder
 #import pytz
@@ -140,4 +140,13 @@ class PostComment(ModelForm):
         fields = ("comment",)
         labels = {"comment": '',}
         widgets = {"comment": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your comment here...', 'style':'resize:none;'})}
+
+class MakeBooking(ModelForm):
+    class Meta:
+        model = Booking
+        fields = ("startdate", "enddate")
+        widgets = {
+            "startdate": DateInput(attrs={'class': 'form-control', 'style': 'max-width:200px;'}),
+            "enddate": DateInput(attrs={'class': 'form-control', 'style': 'max-width:200px;'})
+            }
         

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import PropertyFilter, AddProperty, PostComment
+from .forms import PropertyFilter, AddProperty, PostComment, MakeBooking
 from .models import Listing, User, PropertyType, AvailableDate, Comment
 from datetime import date, timedelta
 from django.db.models import Q
@@ -217,13 +217,16 @@ def comments_view(request, listing_id):
 
 def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
+    form = MakeBooking()
 
     if request.method == "GET":
         return render(request, "booking/book.html", {
-            "listing": listing
+            "listing": listing,
+            "form": form
         })
     
     else:
+        form = MakeBooking(request.POST)
         return HttpResponseRedirect(reverse("booking:index"))
 
 

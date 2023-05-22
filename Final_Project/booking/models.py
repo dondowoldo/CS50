@@ -56,7 +56,8 @@ class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="customer")
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="property")
     timestamp = models.DateTimeField(auto_now_add=True)
-    duration = models.DurationField()
+    startdate = models.DateField()
+    enddate = models.DateField()
     total_price = models.FloatField()
 
     def __str__(self):

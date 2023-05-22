@@ -14,7 +14,7 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = "sent_from", "sent_to", "message", "timestamp"
 
 class BookingAdmin(admin.ModelAdmin):
-    list_display = "user", "listing", "total_price", "duration", "timestamp"
+    list_display = "user", "listing", "total_price", "startdate", "enddate", "timestamp"
 
 class PropertyTypeAdmin(admin.ModelAdmin):
     list_display = "type",

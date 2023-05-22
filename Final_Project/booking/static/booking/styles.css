@@ -551,3 +551,66 @@ a, a:hover {
     justify-content: center;
     gap: 0.5rem;
 }
+
+.book_form_window {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 1rem 1rem 1rem 1rem;
+    background-color: #e1e5ea;
+    box-shadow: 0 16px 32px rgb(0 0 0 / 0.3);
+    gap: 1rem;
+}
+
+.book_img_and_info {
+    width:100%;
+    display: flex;
+}
+
+.book_image_cont {
+    display: flex;
+    width: 50%;
+}
+
+.book_info {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-between;
+    align-items: center;
+    /* outline: 1px dashed red; */
+    border: 1px solid grey;
+    border-left: 0;
+    border-radius: 0 1rem 1rem 0;
+    padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+    font-family: 'Baloo 2';
+    color: #45727d; 
+}
+
+#book_heading {
+    font-size: calc(16px + 2vw);
+}
+
+.book_price {
+    font-size: calc(12px + 2vw);
+    padding: 0;
+    margin: 0;
+}
+
+.heading_and_price {
+    width: 100%;
+    border-bottom: 1px solid grey;
+    /* outline: 1px dashed red; */
+}
+
+.book_form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    /* outline: 1px dashed red; */
+    height: 100%;
+}
