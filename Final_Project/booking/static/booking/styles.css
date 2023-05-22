@@ -472,6 +472,13 @@ a, a:hover {
     border: 0;
 }
 
+.back_to_detail {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    padding: 0 0 1rem 0;
+}
+
 .comments_container {
     width: 95%;
     margin: auto;
@@ -482,7 +489,6 @@ a, a:hover {
 }
 
 .comment {
-
     border-radius: 1rem;
     padding: 0.5rem;
 }

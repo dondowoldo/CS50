@@ -8,8 +8,12 @@
 
 
 {% block body %}
-<center><h1 class="heading" style="font-size: max(4vw, 40px);">{{ listing.title }}</h1><br/></center>
+
 <div class="comments_container">
+    <h1 class="heading" style="font-size: max(4vw, 40px);">{{ listing.title }}</h1><br/>
+    <div class="back_to_detail">
+        <a href="{% url 'booking:detail' listing.id %}"><button class="btn btn-secondary">&laquo Back</button></a>
+    </div>
     <div class="comments_window">      
             {% if comments %}
                 {% for comment in comments %}
