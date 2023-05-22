@@ -150,18 +150,18 @@ def detail_view(request, listing_id):
     submitted = False   # Check if user clicked on view on map button and if so, render map instead of image
 
     listing = Listing.objects.get(id=listing_id)
+    
+    # Folium map Setup
     geomap = folium.Map([listing.geolat, listing.geolng], zoom_start=10)
     folium.Marker([listing.geolat, listing.geolng]).add_to(geomap)
     geomap = geomap._repr_html_()
     
-    if request.method == "GET":
-        
+    if request.method == "GET":      
         return render(request, "booking/detail.html", {
             "listing": listing,
             "geomap": geomap,
             "submitted": submitted
         })
-    
     else:
         if request.POST.get("submitted"):
             submitted = True   
@@ -170,10 +170,8 @@ def detail_view(request, listing_id):
             "geomap": geomap,
             "submitted": submitted
         })
-
         elif request.POST.get("book"):
-            return HttpResponseRedirect(reverse("booking:book", args=[listing.id]))
-                  
+            return HttpResponseRedirect(reverse("booking:book", args=[listing.id]))              
         else:
             return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
     
@@ -181,9 +179,12 @@ def detail_view(request, listing_id):
 def comments_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     comments_desc = Comment.objects.filter(listing__id=listing_id).order_by("-timestamp")
+    
+    #   Paginator Setup
     paginator = Paginator(comments_desc, 4)
     page = request.GET.get('page')
     comments = paginator.get_page(page)
+
     comment_form = PostComment()
 
     if request.method == "GET":

@@ -482,7 +482,7 @@ a, a:hover {
 }
 
 .comment {
-    background-color: white;
+
     border-radius: 1rem;
     padding: 0.5rem;
 }
@@ -516,11 +516,11 @@ a, a:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: white;
 }
 
 .comment {
     display: flex;
-
 }
 
 .comment_creator {
