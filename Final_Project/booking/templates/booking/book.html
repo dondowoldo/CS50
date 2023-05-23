@@ -9,6 +9,9 @@
 
 <div class="container" style="padding-bottom: 2rem;">
     <center><h1 class="heading" style="font-size: max(4vw, 40px);">Book Property</h1><br/></center> 
+    <div class="back_to_detail">
+        <a href="{% url 'booking:detail' listing.id %}"><button class="btn btn-secondary">&laquo Back</button></a>
+    </div>
     <div class="book_form_window">
         <div class="book_img_and_info">
             <div class="book_image_cont">
@@ -23,7 +26,14 @@
                 <form action="" method="POST" class="book_form">
                     {% csrf_token %}
                     {{ form }}
-                    <button class="btn btn-success" type="submit" value="quote "name="quote">Get quote</button>
+                    <div class="quote_card_buttons">
+                        <button class="btn btn-outline-success" type="submit" value="quote "name="quote">Get quote</button>
+                        {% if quoted %}
+                            <button class="btn btn-success" type="submit" value="book "name="book">Book</button>
+                        {% else %}
+                            <button class="btn btn-secondary disabled" disabled>Book</button>
+                        {% endif %}
+                    </div>
                 </form>
             </div>
         </div>

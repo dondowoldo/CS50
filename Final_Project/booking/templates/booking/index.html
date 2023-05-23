@@ -91,7 +91,7 @@
                                 <li><span class="heading">${{ listing.price_per_night |floatformat:2 }} / night</span></li>
                                 <li>
                                     <a class="btn btn-outline-secondary" id="details_button" href="{% url 'booking:detail' listing.id %}">Details</a>
-                                    <a class="btn btn-outline-success" href="#BookPage">Book Now!</a>  
+                                    <a class="btn btn-outline-success" href="{% url 'booking:book' listing.id %}">Book Now!</a>  
                                 </li>
                             </div>
                         </ul>
