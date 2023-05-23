@@ -13,7 +13,8 @@ class DateInput(forms.DateInput):
     
     def get_context(self, name, value, attrs):
         attrs.setdefault('min', datetime.now().strftime('%Y-%m-%d'))
-        return super().get_context(name, value, attrs)
+        return super().get_context(name, value, attrs)  
+
 
 class PropertyFilter(ModelForm):
     def __init__(self, *args, **kwargs):

@@ -217,10 +217,9 @@ def comments_view(request, listing_id):
 
 def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
+    available_dates = get_available_dates(listing_id) # Retrieve still avlbl dates of particular listing
     form = MakeBooking()
     quote_submitted = False
-    available_dates = listing.available_dates.all() # Retrieve still avlbl dates of particular listing
-    print(available_dates)
 
     if request.method == "GET":
         return render(request, "booking/book.html", {
@@ -234,7 +233,7 @@ def book_view(request, listing_id):
             
             startdate_obj = datetime.strptime(request.POST["startdate"], "%Y-%m-%d").date()
             enddate_obj= datetime.strptime(request.POST["enddate"], "%Y-%m-%d").date()
-            selected_dates = get_initial_dates(startdate_obj, enddate_obj)
+            selected_dates = get_initial_dates(startdate_obj, enddate_obj)        
             duration = len(selected_dates)
             price_total = listing.price_per_night * duration
 
@@ -272,3 +271,15 @@ def get_initial_dates(start_date, end_date):
         else:
             new_date += timedelta(days=1)
             available_dates.append(new_date)
+
+
+
+## Helper function to get all datetime objects stored in db as available_dates
+def get_available_dates(listing_id):
+    listing_avlbl_dates = Listing.objects.get(id=listing_id).available_dates.all()
+    available_dates = []
+
+    for avlbl_date in listing_avlbl_dates:
+        available_dates.append(AvailableDate.objects.get(date=avlbl_date.date))
+	
+    return available_dates
