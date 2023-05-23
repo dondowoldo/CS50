@@ -219,6 +219,8 @@ def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     form = MakeBooking()
     quote_submitted = False
+    available_dates = listing.available_dates.all() # Retrieve still avlbl dates of particular listing
+    print(available_dates)
 
     if request.method == "GET":
         return render(request, "booking/book.html", {
@@ -235,7 +237,6 @@ def book_view(request, listing_id):
             selected_dates = get_initial_dates(startdate_obj, enddate_obj)
             duration = len(selected_dates)
             price_total = listing.price_per_night * duration
-
 
             if form.is_valid():
                 quote_submitted = True
