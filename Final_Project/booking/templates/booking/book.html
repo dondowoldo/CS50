@@ -40,6 +40,13 @@
         {% if quoted %}
             <div class="quote_card">
                 <div class="quote_card_row">
+                    {% if unavailable %}
+                    <div class="red_text"> Unavailable dates </div>
+                        {% for date in unavailable %}
+                            <br>
+                        {% endfor %}
+                        <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
+                    {% endif %}
                     <div>Booking from</div>
                     <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
                     <div>Booking to</div>
@@ -50,6 +57,13 @@
                     
                 </div>
                 <div class="quote_card_row">
+                    {% if unavailable %}
+                        <br>
+                        {% for date in unavailable %}
+                            <div class="red_text">{{ date }}</div>
+                        {% endfor %}
+                    <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
+                    {% endif %}
                     <div>{{ startdate }}</div>
                     <hr style="padding-bottom: 0.5rem; margin:0 0 0 0; width: 100%;">
                     <div>{{ enddate }}</div>

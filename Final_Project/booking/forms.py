@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Listing, Comment, Booking
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, date
 import geocoder
 #import pytz
 
@@ -14,7 +14,19 @@ class DateInput(forms.DateInput):
     def get_context(self, name, value, attrs):
         attrs.setdefault('min', datetime.now().strftime('%Y-%m-%d'))
         return super().get_context(name, value, attrs)  
+    
 
+class DateInputSpecific(forms.DateInput):
+    input_type = 'date'
+    def __init__(self, *args, **kwargs):
+        self.available_dates = kwargs.pop('available_dates', [])
+        super().__init__(*args, **kwargs)
+        
+    def get_context(self, name, value, attrs):
+        attrs.setdefault('min', self.available_dates[0].date)
+        attrs.setdefault('max', self.available_dates[len(self.available_dates)-1].date)     
+        context = super().get_context(name, value, attrs)
+        return context
 
 class PropertyFilter(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -143,11 +155,16 @@ class PostComment(ModelForm):
         widgets = {"comment": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your comment here...', 'style':'resize:none;'})}
 
 class MakeBooking(ModelForm):
+    def __init__(self, available_dates, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["startdate"].widget.available_dates = available_dates
+        self.fields["enddate"].widget.available_dates = available_dates
+
     class Meta:
         model = Booking
         fields = ("startdate", "enddate")
         widgets = {
-            "startdate": DateInput(attrs={'class': 'form-control', 'style': 'max-width:200px;'}),
-            "enddate": DateInput(attrs={'class': 'form-control', 'style': 'max-width:200px;'})
+            "startdate": DateInputSpecific(attrs={'class': 'form-control', 'style': 'max-width:200px;'}),
+            "enddate": DateInputSpecific(attrs={'class': 'form-control', 'style': 'max-width:200px;'})
             }
-        
+    

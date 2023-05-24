@@ -218,7 +218,7 @@ def comments_view(request, listing_id):
 def book_view(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     available_dates = get_available_dates(listing_id) # Retrieve still avlbl dates of particular listing
-    form = MakeBooking()
+    form = MakeBooking(available_dates)
     quote_submitted = False
 
     if request.method == "GET":
@@ -228,12 +228,14 @@ def book_view(request, listing_id):
         })
     
     else:
-        form = MakeBooking(request.POST)
+        form = MakeBooking(available_dates, request.POST)
         if request.POST.get("quote"):
             
             startdate_obj = datetime.strptime(request.POST["startdate"], "%Y-%m-%d").date()
             enddate_obj= datetime.strptime(request.POST["enddate"], "%Y-%m-%d").date()
-            selected_dates = get_initial_dates(startdate_obj, enddate_obj)        
+            selected_dates = get_initial_dates(startdate_obj, enddate_obj) 
+            unavailable = get_unavailable_dates(selected_dates, available_dates)
+
             duration = len(selected_dates)
             price_total = listing.price_per_night * duration
 
@@ -247,15 +249,47 @@ def book_view(request, listing_id):
                     "duration": duration,
                     "startdate": startdate_obj,
                     "enddate": enddate_obj,
-                    "price_total": price_total
+                    "price_total": price_total,
+                    "unavailable": unavailable
                 })
             else:
                 return render(request, "booking/book.html", {
                     "listing": listing,
                     "form": form,
                 })
-        else:
-            return HttpResponseRedirect(reverse("booking:index"))
+        elif    request.POST.get("book"):
+                startdate_obj = datetime.strptime(request.POST["startdate"], "%Y-%m-%d").date()
+                enddate_obj= datetime.strptime(request.POST["enddate"], "%Y-%m-%d").date()
+                selected_dates = get_initial_dates(startdate_obj, enddate_obj) 
+                unavailable = get_unavailable_dates(selected_dates, available_dates)
+                duration = len(selected_dates)
+                price_total = listing.price_per_night * duration
+
+                if not unavailable and form.is_valid():
+                    for date in selected_dates:
+                        dateobj = AvailableDate.objects.get(availability__id=listing_id, date=date)
+                        listing.available_dates.remove(dateobj)
+                    listing.save()
+
+                    complete_form = form.save(commit=False)
+                    complete_form.user = request.user
+                    complete_form.listing = listing
+                    complete_form.total_price = price_total
+                    complete_form.save()
+
+                    return HttpResponseRedirect(reverse("booking:index"))
+                else:
+                    return render(request, "booking/book.html", {
+                        "listing": listing,
+                        "form": form,
+                        "quoted": quote_submitted,
+                        "selected_dates": selected_dates,
+                        "duration": duration,
+                        "startdate": startdate_obj,
+                        "enddate": enddate_obj,
+                        "price_total": price_total,
+                        "unavailable": unavailable
+                    })
 
 
 ## Helper func that gets 2 dates and returns a list of all dates in interval
@@ -276,10 +310,20 @@ def get_initial_dates(start_date, end_date):
 
 ## Helper function to get all datetime objects stored in db as available_dates
 def get_available_dates(listing_id):
-    listing_avlbl_dates = Listing.objects.get(id=listing_id).available_dates.all()
+    listing_avlbl_dates = Listing.objects.get(id=listing_id).available_dates.all().order_by('date')
     available_dates = []
 
     for avlbl_date in listing_avlbl_dates:
         available_dates.append(AvailableDate.objects.get(date=avlbl_date.date))
 	
     return available_dates
+
+## Helper function to get all dates that user selected and are no longer available
+def get_unavailable_dates(selected_dates, available_dates):
+    unavailable = []
+
+    for date in selected_dates:
+        if any(date == available_date.date for available_date in available_dates):
+            continue
+        unavailable.append(date)
+    return unavailable

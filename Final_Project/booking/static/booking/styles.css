@@ -638,3 +638,7 @@ a, a:hover {
     justify-content: center;
     column-gap: 1rem;
 }
+
+.red_text {
+    color: red;
+}
