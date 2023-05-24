@@ -49,8 +49,8 @@
                     <li>Price per night</li>
                     <li>City</li>
                     <li>Property type</li>
+                    <li>Available From</li>
                     <li>Available to</li>
-                    <li>Max nights total</li>
 
                 </ul>
             </div>
@@ -59,12 +59,13 @@
                     <li class="right_col_li">${{ listing.price_per_night |floatformat:2 }}</li>
                     <li class="right_col_li">{{ listing.location }}</li>
                     <li class="right_col_li">{{ listing.type }}</li>
+                    <li class="right_col_li">{{ listing.availability_from }}</li>
                     <li class="right_col_li">{{ listing.availability_to }}</li>
-                    <li class="right_col_li">6 nights (TODO)</li>
                 </ul>
             </div>
 
         </div>
+        <div style="display: flex; align-self: center;"><i>Availability may vary based on other bookings.</i></div>
         <hr style="padding:0; margin:0 0 0 0; width: 100%">
         <div class="details_info">
             <div class="left_column">

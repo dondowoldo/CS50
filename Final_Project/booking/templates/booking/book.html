@@ -28,8 +28,10 @@
                     {{ form }}
                     <div class="quote_card_buttons">
                         <button class="btn btn-outline-success" type="submit" value="quote "name="quote">Get quote</button>
-                        {% if quoted %}
+                        {% if quoted and user.is_authenticated %}
                             <button class="btn btn-success" type="submit" value="book "name="book">Book</button>
+                        {% elif quoted and not user.is_authenticated %}
+                            <button class="btn btn-secondary disabled" disabled>Log-in to Book</button>
                         {% else %}
                             <button class="btn btn-secondary disabled" disabled>Book</button>
                         {% endif %}

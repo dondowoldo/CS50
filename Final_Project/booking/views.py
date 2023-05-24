@@ -90,8 +90,8 @@ def index(request):
                 filters = form.cleaned_data
                 query = Q()
             
-                if filters["title"] is not None:
-                    query &= Q(title__contains=filters["title"])
+                if filters["location"] is not None:
+                    query &= Q(location__contains=filters["location"])
                 
                 if filters["type"] is not None:
                     query &= Q(type=filters["type"])

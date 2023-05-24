@@ -61,7 +61,7 @@ class Booking(models.Model):
     total_price = models.FloatField()
 
     def __str__(self):
-        return f"{self.user} : {self.listing}, {self.timestamp}, {self.duration}, {self.total_price}"
+        return f"{self.user} : {self.listing}, {self.timestamp}, {self.total_price}"
 
 
 class AvailableDate(models.Model):
