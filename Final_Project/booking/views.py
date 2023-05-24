@@ -5,8 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import PropertyFilter, AddProperty, PostComment, MakeBooking
-from .models import Listing, User, PropertyType, AvailableDate, Comment
+from .forms import PropertyFilter, AddProperty, PostComment, MakeBooking, EditProperty
+from .models import Listing, User, PropertyType, AvailableDate, Comment, Booking
 from datetime import date, timedelta, datetime
 from django.db.models import Q
 from django.conf import settings
@@ -290,6 +290,45 @@ def book_view(request, listing_id):
                         "price_total": price_total,
                         "unavailable": unavailable
                     })
+
+@login_required(login_url='booking:login')
+def my_properties_view(request):
+    return render(request, "booking/my_properties.html", {
+        "listings": Listing.objects.filter(creator=request.user)
+    })
+
+
+@login_required(login_url='booking:login')
+def edit_listing(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    bookings = Booking.objects.filter(listing=listing)
+    unauthorised = False
+
+    form = EditProperty({
+        "type": listing.type,
+        "title": listing.title,
+        "title": listing.title,
+        "price_per_night": listing.price_per_night,
+        "imageurl": listing.imageurl,
+        "location": listing.location,
+        # "availability_from": listing.availability_from,
+        # "availability_to": listing.availability_to,
+        "description": listing.description
+    })
+
+    if not request.user == listing.creator:
+        unauthorised = True
+
+    if request.method == "GET":
+        return render(request, "booking/edit_listing.html",{
+            "unauthorised": unauthorised,
+            "listing": listing,
+            "form": form
+
+        })
+    
+    else:
+        return HttpResponseRedirect(reverse('booking:detail', args=[listing.id]))
 
 
 ## Helper func that gets 2 dates and returns a list of all dates in interval
