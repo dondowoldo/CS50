@@ -118,6 +118,20 @@ def index(request):
         elif request.POST.get("reset"):
             return HttpResponseRedirect(reverse("booking:index"))
         
+        elif request.POST.get("follow"):
+            listing_id = request.POST.get("follow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.add(request.user)
+            return HttpResponseRedirect(reverse("booking:index"))
+        
+        
+        elif request.POST.get("unfollow"):
+            listing_id = request.POST.get("unfollow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.remove(request.user)
+            return HttpResponseRedirect(reverse("booking:index"))
+        
+        
 @login_required(login_url='booking:login')
 def addProperty(request):
     if request.method == "GET":
@@ -171,7 +185,20 @@ def detail_view(request, listing_id):
             "submitted": submitted
         })
         elif request.POST.get("book"):
-            return HttpResponseRedirect(reverse("booking:book", args=[listing.id]))              
+            return HttpResponseRedirect(reverse("booking:book", args=[listing.id]))
+
+        elif request.POST.get("follow"):
+            listing_id = request.POST.get("follow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.add(request.user)
+            return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))      
+        
+        elif request.POST.get("unfollow"):
+            listing_id = request.POST.get("unfollow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.remove(request.user)
+            return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
+
         else:
             return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
     
@@ -352,16 +379,88 @@ def my_bookings_view(request):
             "bookings": bookings
         })
     else:
-        listing_id = request.POST.get("cancel")
-        booked_dates = get_booking_dates(listing_id, request.user)
-        booking = Booking.objects.get(listing__id=listing_id, user=request.user)
-        listing = Listing.objects.get(id=listing_id)
-        for date in booked_dates:
-            listing.available_dates.add(AvailableDate.objects.get(date=date))
-        listing.save()
-        booking.delete()
-        return HttpResponseRedirect(reverse("booking:my_bookings")
-                                    )
+        if request.POST.get("cancel"):
+            listing_id = request.POST.get("cancel")
+            booked_dates = get_booking_dates(listing_id, request.user)
+            booking = Booking.objects.get(listing__id=listing_id, user=request.user)
+            listing = Listing.objects.get(id=listing_id)
+            for date in booked_dates:
+                listing.available_dates.add(AvailableDate.objects.get(date=date))
+            listing.save()
+            booking.delete()
+            return HttpResponseRedirect(reverse("booking:my_bookings"))
+
+        elif request.POST.get("follow"):
+            listing_id = request.POST.get("follow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.add(request.user)
+            return HttpResponseRedirect(reverse("booking:my_bookings"))      
+        
+        elif request.POST.get("unfollow"):
+            listing_id = request.POST.get("unfollow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.remove(request.user)
+            return HttpResponseRedirect(reverse("booking:my_bookings"))
+
+
+@login_required
+def my_followed_view(request):
+    if request.method =="GET":
+        return render(request, "booking/watchlist.html", {
+            "form": PropertyFilter(),
+            "listings": Listing.objects.filter(watchlist=request.user)
+        })
+    else:
+        if  request.POST.get("filter"):
+            form = PropertyFilter(request.POST)  
+            if form.is_valid():               
+                
+                ## QUERING DB FOR FILTERS IF SPECIFIED BY USER
+                filters = form.cleaned_data
+                query = Q()
+            
+                if filters["location"] is not None:
+                    query &= Q(location__contains=filters["location"])
+                
+                if filters["type"] is not None:
+                    query &= Q(type=filters["type"])
+                
+                if filters["price_per_night"]:
+                    query &= Q(price_per_night__lte=filters["price_per_night"])
+
+                if filters["availability_from"]:
+                    query &= Q(availability_from__lte=filters["availability_from"])
+
+                if filters["availability_to"]:
+                    query &= Q(availability_to__gte=filters["availability_to"])
+
+                filtered = Listing.objects.filter(query)                
+
+                return render(request, "booking/watchlist.html", {
+                "form": form,
+                "listings": filtered
+                })
+            else:
+                return render(request, "booking/watchlist.html", {
+                "form": form
+                })       
+        elif request.POST.get("reset"):
+            return HttpResponseRedirect(reverse("booking:following"))
+        
+        elif request.POST.get("follow"):
+            listing_id = request.POST.get("follow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.add(request.user)
+            return HttpResponseRedirect(reverse("booking:following"))      
+        
+        elif request.POST.get("unfollow"):
+            listing_id = request.POST.get("unfollow")
+            listing = Listing.objects.get(id=listing_id)
+            listing.watchlist.remove(request.user)
+            return HttpResponseRedirect(reverse("booking:following"))
+
+
+
 ## Helper func that gets 2 dates and returns a list of all dates in interval
 
 def get_initial_dates(start_date, end_date):

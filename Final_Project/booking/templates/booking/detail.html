@@ -38,7 +38,14 @@
         <div class="details_title">
             {{ listing.title }}
             <div class="details_heart">
-                <img id="heart_img" src="{% static 'booking/heart_32_grey.svg' %}">
+                <form action="" method="POST" style="display: flex; align-items: center;">
+                    {% csrf_token %}
+                    {% if user.is_authenticated and request.user not in listing.watchlist.all %}
+                        <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.id }}" name="follow" ><img id="heart_img" src="{% static 'booking/heart_32_grey.svg' %}"></button>
+                    {% else %}
+                        <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.id }}" name="unfollow" ><img style="filter: none" id="heart_img" src="{% static 'booking/heart_32_red.svg' %}"></button>
+                    {% endif %}
+                </form>
             </div>
         </div>
         <hr style="padding:0; margin:0 0 0 0; width: 100%">   

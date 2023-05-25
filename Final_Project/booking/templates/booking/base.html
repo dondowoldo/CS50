@@ -63,7 +63,7 @@
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'booking:my_bookings' %}"><img src="{% static 'booking/book-open20.svg' %}" style="padding-right: 2rem;">My Bookings</a></li>
                                 <li><a class="dropdown-item" href="{% url 'booking:my_properties' %}"><img src="{% static 'booking/home20.svg' %}" style="padding-right: 2rem;">My Properties</a></li>
-                                <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/eye.svg' %}" style="padding-right: 2rem;">Watchlist(TODO)</a></li>
+                                <li><a class="dropdown-item" href="{% url 'booking:following' %}"><img src="{% static 'booking/eye.svg' %}" style="padding-right: 2rem;">Watchlist</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li id="logout_li"><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/user-x.svg' %}" style="padding-right: 2rem;" id="logout_img">Logout</a></li>
                             </ul>

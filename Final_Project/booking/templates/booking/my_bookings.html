@@ -53,8 +53,14 @@
 
                         <span class="footing_text"><i>{{ listing.timestamp.date }}</i></span>
                             <!-- <img class="icons" id="watch" src="{% static 'booking/eye_grey_24.svg' %}"> -->
-                        <img class="icons" id="heart" src="{% static 'booking/heart_grey_24.svg' %}">
-                    
+                            <form action="" method="POST" style="display: flex;">
+                                {% csrf_token %}
+                                {% if user.is_authenticated and request.user not in listing.listing.watchlist.all %}
+                                    <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.listing.id }}" name="follow" ><img class="icons" id="heart" src="{% static 'booking/heart_grey_24.svg' %}"></button>
+                                {% else %}
+                                    <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.listing.id }}" name="unfollow" ><img class="icons" style="filter: none" id="heart" src="{% static 'booking/heart_24_red.svg' %}"></button>
+                                {% endif %}
+                            </form>            
                     </div>
                     {% else %}
                     <div class="footing">
