@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Home
+    My Properties
 {% endblock %}
 
 
@@ -11,75 +11,74 @@
     <div class="container">
         <div class="index_buttons">
             {% if request.user.is_authenticated %}
-            <a class="btn btn-secondary" href="{% url 'booking:add' %}" role="button">
-            <img src="{% static 'booking/file-plus20.svg' %}" style="padding-right: 0.25rem;">Add Listing
-            </a>
-            <a class="btn btn-secondary" href="#collapseExample" role="button">
-                <img src="{% static 'booking/home20-1.5.svg' %}" style="padding-right: 0.25rem;">My Properties
+                <a class="btn btn-secondary" href="{% url 'booking:add' %}" role="button">
+                    <img src="{% static 'booking/file-plus20.svg' %}" style="padding-right: 0.25rem;">Add Listing
+                </a>
+                <a class="btn btn-secondary" href="#collapseExample" role="button">
+                    <img src="{% static 'booking/home20-1.5.svg' %}" style="padding-right: 0.25rem;">My Properties
                 </a>
             {% endif %}
         </div>
 
         {% if form.non_field_errors %}
-        <div style="transition: 0.7s;" class="collapse.show" id="collapseFilters">
+            <div style="transition: 0.7s;" class="collapse.show" id="collapseFilters">
         {% else %}
-        <div style="transition: 0.7s;" class="collapse" id="collapseFilters">
+            <div style="transition: 0.7s;" class="collapse" id="collapseFilters">
         {% endif %}
-            <center>
+        <center>
             <div class="card card-body" style="background: transparent; border: 0;">           
                 <div class="form-group">
-                    
-                        <form action="" method="POST" style="min-width: 260px; max-width: 500px;">
-                            {% csrf_token %}
-                            {% for field in form %}
-                                {% if field == form.price_per_night %}
-                                    <div class="input-group" style="margin-top: 1.5rem">
-                                        <span class="input-group-text">$</span>
-                                        {{ field }}
-                                    </div>
-                                {% else %}
-                                    {{ field.label_tag }}
+                    <form action="" method="POST" style="min-width: 260px; max-width: 500px;">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {% if field == form.price_per_night %}
+                                <div class="input-group" style="margin-top: 1.5rem">
+                                    <span class="input-group-text">$</span>
                                     {{ field }}
-                                {% endif %}
-                            {% endfor %}
-                            
-                            <div class="filter_buttons">
-                                <input class="btn btn-success" type="submit" name="filter" value="Submit" style="min-width: 73%;">
-                                <input class="btn btn-warning" type="submit" name="reset" value="Reset" style="min-width: 25%;">
-                            </div>
-                        </form>
-                    
+                                </div>
+                            {% else %}
+                                {{ field.label_tag }}
+                                {{ field }}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        <div class="filter_buttons">
+                            <input class="btn btn-success" type="submit" name="filter" value="Submit" style="min-width: 73%;">
+                            <input class="btn btn-warning" type="submit" name="reset" value="Reset" style="min-width: 25%;">
+                        </div>
+                    </form>                   
                 </div>
             </div>
         </center>
         </div>
     </div>
 
-
     <div class="container-fluid">
         {% if form.non_field_errors %}
-        <ul>
-        {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-        </ul>
+            <ul>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
         {% endif %}
         
+        {% if not listings %}
+            <center><h1 class="heading">You haven't listed any properties yet.</h1></center>
+        {% endif %}
         <div class="property_listings">
             {% for listing in listings %}
             <div class="listing_card">
                 <div class="listing_img_cont">
                     {% if not listing.imageurl %}
-                    <img class="listing_img" src="{% static 'booking/noimage.jpg' %}">
+                        <img class="listing_img" src="{% static 'booking/noimage.jpg' %}">
                     {% else %}
-                    <img class="listing_img" src="{{ listing.imageurl}}">
+                        <img class="listing_img" src="{{ listing.imageurl}}">
                     {% endif %}
                     <div class="property_title_cont">
                         <a href="{% url 'booking:detail' listing.id %}"><h1 class="card_heading">{{ listing.title }}</h1></a>
                     </div>
                 </div>
                 <div class="listing_card_content">
-
                     <div class="info">
                         <ul style="padding: 0; list-style-type: none;">
                             <hr style="padding:0; margin:0 0 0 0.5rem; width: 90%">
@@ -94,17 +93,9 @@
                             </div>
                         </ul>
                     </div>
-
                 </div>
-
             </div>
             {% endfor %}
-
-
-            
-
         </div>
-
-
     </div>
 {% endblock %}

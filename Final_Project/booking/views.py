@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -9,14 +9,9 @@ from .forms import PropertyFilter, AddProperty, PostComment, MakeBooking, EditPr
 from .models import Listing, User, PropertyType, AvailableDate, Comment, Booking
 from datetime import date, timedelta, datetime
 from django.db.models import Q
-from django.conf import settings
 import folium
 import geocoder
 from django.core.paginator import Paginator
-
-
-# gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
-
 
 def login_view(request):
     if request.method == "POST":
@@ -36,7 +31,6 @@ def login_view(request):
             })
     else:
         return render(request, "booking/login.html")
-
 
 
 def logout_view(request):
@@ -543,4 +537,3 @@ def get_booking_dates(listing_id, user):
     startdate = booking.startdate
     enddate = booking.enddate
     return get_initial_dates(startdate, enddate)
-

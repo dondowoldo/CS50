@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block title %}
-    Add Property
+    Edit Details
 {% endblock %}
 
 {% block body %}
 
 <div class="container">
-<center>
+    <center>
         <h1 class="heading" style="font-size: max(4vw, 40px);">Edit Property</h1><br/>
         {% if not unauthorised %}
             <form action="" method="POST" style="max-width: 600px;">
@@ -21,22 +21,21 @@
                 </ul>
                 {% endif %}
                 
-                    {% for field in form %}
-                        {% if field == form.price_per_night %}
-                            {{ field.label_tag }}
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                {{ field }}
-                            </div>
-                        {% else %}
-                            {{ field.label_tag }}
+                {% for field in form %}
+                    {% if field == form.price_per_night %}
+                        {{ field.label_tag }}
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
                             {{ field }}
-                        {% endif %}
-                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ field.label_tag }}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
                 <input type="submit" value="Submit" class="btn btn-success" style="width: 100%; margin: 0.5rem 0 2rem 0;">
             </form>
         {% endif %}
-    </div>
     </center>
-    
+</div>  
 {% endblock %}

@@ -9,39 +9,37 @@
 
 <div class="container" style="padding-bottom: 2rem;">
     {% if user.is_authenticated and listing.creator != request.user %}
-    <center><h1 class="heading" style="font-size: max(4vw, 40px);">You don't have permissions to delete this listing</h1><br/></center> 
+        <center><h1 class="heading" style="font-size: max(4vw, 40px);">You don't have permissions to delete this listing</h1><br/></center> 
     {% else %}
-    <center><h1 class="heading" style="font-size: max(4vw, 40px);">Remove Property</h1><br/></center> 
-    <div class="back_to_detail">
-        <a href="{% url 'booking:detail' listing.id %}"><button class="btn btn-secondary">&laquo Back</button></a>
-    </div>
-    <div class="book_form_window">
-        <div class="book_img_and_info">
-            <div class="book_image_cont">
-                {% if not listing.imageurl %}
-                <img src="{% static 'booking/noimage.jpg' %}" style="max-width: 100%; border-radius: 1rem 0 0 0; object-fit: cover;">
-                {% else %}
-                <img src="{{ listing.imageurl }}" style="max-width: 100%; border-radius: 1rem 0 0 0; object-fit: cover;">
-                {% endif %}
-            </div>
-
-            <div class="book_info">
-                <div class="heading_and_price">
-                    <center><h1 class="heading" id="book_heading">{{ listing.title }}</h1></center>
-                    <center><p class="book_price">${{ listing.price_per_night|floatformat:2 }}/night</p></center>
+        <center><h1 class="heading" style="font-size: max(4vw, 40px);">Remove Property</h1><br/></center> 
+        <div class="back_to_detail">
+            <a href="{% url 'booking:detail' listing.id %}"><button class="btn btn-secondary">&laquo Back</button></a>
+        </div>
+        <div class="book_form_window">
+            <div class="book_img_and_info">
+                <div class="book_image_cont">
+                    {% if not listing.imageurl %}
+                        <img src="{% static 'booking/noimage.jpg' %}" style="max-width: 100%; border-radius: 1rem 0 0 0; object-fit: cover;">
+                    {% else %}
+                        <img src="{{ listing.imageurl }}" style="max-width: 100%; border-radius: 1rem 0 0 0; object-fit: cover;">
+                    {% endif %}
                 </div>
-                <form action="" method="POST" class="book_form">
-                    {% csrf_token %}
-                        <div>Are you sure you want to delete this listing?</div>
-                    <div class="quote_card_buttons">
-                        <button class="btn btn-danger" type="submit" value="delete" name="delete">Delete</button>
+
+                <div class="book_info">
+                    <div class="heading_and_price">
+                        <center><h1 class="heading" id="book_heading">{{ listing.title }}</h1></center>
+                        <center><p class="book_price">${{ listing.price_per_night|floatformat:2 }}/night</p></center>
                     </div>
-                </form>
+                    <form action="" method="POST" class="book_form">
+                        {% csrf_token %}
+                            <div>Are you sure you want to delete this listing?</div>
+                        <div class="quote_card_buttons">
+                            <button class="btn btn-danger" type="submit" value="delete" name="delete">Delete</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     {% endif %}
-</div>
-
-    
+</div> 
 {% endblock %}

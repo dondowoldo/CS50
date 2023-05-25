@@ -8,16 +8,14 @@
 
 
 {% block body %}
-
 <div class="comments_container">
     <h1 class="heading" style="font-size: max(4vw, 40px);">{{ listing.title }}</h1><br/>
     <div class="back_to_detail">
         <a href="{% url 'booking:detail' listing.id %}"><button class="btn btn-secondary">&laquo Back</button></a>
     </div>
     <div class="comments_window">      
-            {% if comments %}
-                {% for comment in comments %}
-                
+        {% if comments %}
+            {% for comment in comments %}
                 <div class="comments">
                     <div class="comment">
                         {{ comment.comment }}
@@ -28,19 +26,18 @@
                             <div>{{ comment.timestamp| timesince }} ago</div>
                     </div>
                 </div>
-                
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
+        {% endif %}
 
         <div class="paginator">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content center pagination-sm">
                     {% if comments.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
-                    <li class="page-item"><a class="page-link" href="?page={{ comments.previous_page_number }}">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ comments.previous_page_number }}">Previous</a></li>
                     {% else %}
-                    <li class="page-item disabled"><a class="page-link" href="#">&laquo First</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">&laquo First</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                     {% endif %}
 
                     {% for i in comments.paginator.page_range %}
@@ -52,11 +49,11 @@
                     {% endfor %}
 
                     {% if comments.has_next %}
-                    <li class="page-item"><a class="page-link" href="?page={{ comments.next_page_number }}">Next</a></li>
-                    <li class="page-item"><a class="page-link" href="?page={{ comments.paginator.num_pages }}">Last &raquo</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ comments.next_page_number }}">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ comments.paginator.num_pages }}">Last &raquo</a></li>
                     {% else %}
-                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#">Last &raquo</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Last &raquo</a></li>
                     {% endif %}
                 </ul>
             </nav>
@@ -71,13 +68,10 @@
                         <button class="btn btn-success" type="submit" name="sub_comment" value="sub_comment">Post Comment</button>
                     </div>
                 </form>
-
             {% else %}
                 <div>&raquo <a href="{% url 'booking:login' %}">Log-in </a> to add comments..</div>  
             {% endif %}
-
     </div>
-
 </div>
 
 {% endblock %}

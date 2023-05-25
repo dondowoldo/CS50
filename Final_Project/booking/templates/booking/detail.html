@@ -8,7 +8,6 @@
 
 
 {% block body %}
-
 <div class="details_container">
     <div class="details_sections">
         <div class="details_img_container">
@@ -19,11 +18,11 @@
                     <img src="{{ listing.imageurl }}" id="details_img">
                 {% endif %}
             <div class="map_button_container">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <button type="submit" name="submitted" value="submitted" id="map_button">View on Map</button>
-                    </form>
-                </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="submitted" value="submitted" id="map_button">View on Map</button>
+                </form>
+            </div>
             {% else %}
             <div class="map_holder">
                 {{ geomap|safe }}
@@ -39,14 +38,14 @@
             {{ listing.title }}
             <div class="details_heart">
                 {% if user.is_authenticated and request.user != listing.creator %}
-                <form action="" method="POST" style="display: flex; align-items: center;">
-                    {% csrf_token %}
-                    {% if user.is_authenticated and request.user not in listing.watchlist.all %}
-                        <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.id }}" name="follow" ><img id="heart_img" src="{% static 'booking/heart_32_grey.svg' %}"></button>
-                    {% else %}
-                        <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.id }}" name="unfollow" ><img style="filter: none" id="heart_img" src="{% static 'booking/heart_32_red.svg' %}"></button>
-                    {% endif %}
-                </form>
+                    <form action="" method="POST" style="display: flex; align-items: center;">
+                        {% csrf_token %}
+                        {% if user.is_authenticated and request.user not in listing.watchlist.all %}
+                            <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.id }}" name="follow" ><img id="heart_img" src="{% static 'booking/heart_32_grey.svg' %}"></button>
+                        {% else %}
+                            <button style="margin:0; padding: 0; border: 0; background-color: transparent; display: flex;" type="submit" value="{{ listing.id }}" name="unfollow" ><img style="filter: none" id="heart_img" src="{% static 'booking/heart_32_red.svg' %}"></button>
+                        {% endif %}
+                    </form>
                 {% endif %}
             </div>
         </div>
@@ -72,8 +71,8 @@
                     <li class="right_col_li">{{ listing.availability_to }}</li>
                 </ul>
             </div>
-
         </div>
+
         <div style="display: flex; align-self: center;"><i>Availability may vary based on other bookings.</i></div>
         <hr style="padding:0; margin:0 0 0 0; width: 100%">
         <div class="details_info">
@@ -101,10 +100,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 {% if user.is_authenticated and request.user != listing.creator %}
-                <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
-                <!-- <button class="btn btn-info final_button" id="message_button" name="message" value="message">
-                    <img src="{% static 'booking/message-square.svg' %}">Message Landlord
-                </button> -->
+                    <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
                 {% else %}
                     <a class="btn btn-warning final_button" href="{% url 'booking:edit_listing' listing.id %}">Edit Listing</a>
                     <a class="btn btn-danger final_button" href="{% url 'booking:delete_listing' listing.id %}">Delete</a>
@@ -114,5 +110,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}

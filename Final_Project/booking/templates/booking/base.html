@@ -19,58 +19,41 @@
         </title>
     </head>
     <body>
-            <ul class="nav nav_top">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'booking:index' %}"><h1 class="heading">HouseBrowse</h1></a>
+        <ul class="nav nav_top">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'booking:index' %}"><h1 class="heading">HouseBrowse</h1></a>
+            </li>
+            
+            {% if not request.user.is_authenticated %}
+            <div class="right_nav">
+                <li class="nav-item anonymous_right_nav">
+                    <a class="nav-link" href="{% url 'booking:login' %}"><img class="anonymouseimg" src="{% static 'booking/log-in.svg' %}" style="padding-right: 0.25rem;">Login</a>
                 </li>
-              
-                {% if not request.user.is_authenticated %}
-                <div class="right_nav">
-                    <li class="nav-item anonymous_right_nav">
-                        <a class="nav-link" href="{% url 'booking:login' %}"><img class="anonymouseimg" src="{% static 'booking/log-in.svg' %}" style="padding-right: 0.25rem;">Login</a>
-                    </li>
-                    <li class="nav-item anonymous_right_nav">
-                        <a class="nav-link" href="{% url 'booking:register' %}"><img class="anonymouseimg" src="{% static 'booking/user-plus.svg' %}" style="padding-right: 0.25rem;">Register</a>
-                    </li>
+                <li class="nav-item anonymous_right_nav">
+                    <a class="nav-link" href="{% url 'booking:register' %}"><img class="anonymouseimg" src="{% static 'booking/user-plus.svg' %}" style="padding-right: 0.25rem;">Register</a>
+                </li>           
+            </div>            
+            {% else %}
+            <div class="right_nav">
+                <li class="nav-item">
+                    <div class="dropdown-center">
+                        <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#userDropdown" id="userimg"><img class="panel_img" src="{% static 'booking/user.svg' %}" alt="User"></a>
                     
-                </div>            
-                {% else %}
-                <div class="right_nav">
-                    <!-- <li class="nav-item">
-                        <div class="dropdown-center">
-                            <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#messageDropdown" id="messages"><img class="panel_img" src="{% static 'booking/message-circle32.svg' %}" alt="Messages"></a>
-                        
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="messages">
-
-                                <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/mail.svg' %}" style="padding-right: 2rem;">My Messages (TODO)</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/settings.svg' %}" style="padding-right: 2rem;">Sample Message (TODO)</a></li>
-                                <li><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/user-x.svg' %}" style="padding-right: 2rem;">Sample Message (TODO)</a></li>
-                            </ul>
-
-                        </div>
-                    </li> -->
-
-                    <li class="nav-item">
-                        <div class="dropdown-center">
-                            <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#userDropdown" id="userimg"><img class="panel_img" src="{% static 'booking/user.svg' %}" alt="User"></a>
-                        
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userimg">
-                                <li><h6 class="dropdown-header"><img src="{% static 'booking/user-check.svg' %}" style="padding-right: 0.5rem;">{{ request.user.username }}</h6></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'booking:my_bookings' %}"><img src="{% static 'booking/book-open20.svg' %}" style="padding-right: 2rem;">My Bookings</a></li>
-                                <li><a class="dropdown-item" href="{% url 'booking:my_properties' %}"><img src="{% static 'booking/home20.svg' %}" style="padding-right: 2rem;">My Properties</a></li>
-                                <li><a class="dropdown-item" href="{% url 'booking:following' %}"><img src="{% static 'booking/heart_20_white.svg' %}" style="padding-right: 2rem;">Following</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li id="logout_li"><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/user-x.svg' %}" style="padding-right: 2rem;" id="logout_img">Logout</a></li>
-                            </ul>
-
-                        </div>
-                    </li>
-                </div>
-                {% endif %}
-            </ul>
-            {% if messages %}
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userimg">
+                            <li><h6 class="dropdown-header"><img src="{% static 'booking/user-check.svg' %}" style="padding-right: 0.5rem;">{{ request.user.username }}</h6></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'booking:my_bookings' %}"><img src="{% static 'booking/book-open20.svg' %}" style="padding-right: 2rem;">My Bookings</a></li>
+                            <li><a class="dropdown-item" href="{% url 'booking:my_properties' %}"><img src="{% static 'booking/home20.svg' %}" style="padding-right: 2rem;">My Properties</a></li>
+                            <li><a class="dropdown-item" href="{% url 'booking:following' %}"><img src="{% static 'booking/heart_20_white.svg' %}" style="padding-right: 2rem;">Following</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li id="logout_li"><a class="dropdown-item" href="{% url 'booking:logout' %}"><img src="{% static 'booking/user-x.svg' %}" style="padding-right: 2rem;" id="logout_img">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </div>
+            {% endif %}
+        </ul>
+        {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}" role="alert" style="display: flex; justify-content: center;">
                     {{ message }}

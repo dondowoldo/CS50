@@ -6,20 +6,18 @@
 {% endblock %}
 
 {% block body %}
-
 <div class="container">
-<center>
+    <center>
         <h1 class="heading" style="font-size: max(4vw, 40px);">Add A Property</h1><br/>
             <form action="" method="POST" style="max-width: 600px;">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
-                <ul>
-                {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-                </ul>
+                    <ul>
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
                 {% endif %}
-                
                     {% for field in form %}
                         {% if field == form.price_per_night %}
                             {{ field.label_tag }}
@@ -34,7 +32,6 @@
                     {% endfor %}
                 <input type="submit" value="Submit" class="btn btn-success" style="width: 100%; margin: 0.5rem 0 2rem 0;">
             </form>
-    </div>
     </center>
-    
+</div>   
 {% endblock %}
