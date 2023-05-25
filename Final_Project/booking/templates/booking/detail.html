@@ -102,9 +102,9 @@
                 {% csrf_token %}
                 {% if user.is_authenticated and request.user != listing.creator %}
                 <button class="btn btn-success final_button" name="book" value="book">Book Now!</button>
-                <button class="btn btn-info final_button" id="message_button" name="message" value="message">
+                <!-- <button class="btn btn-info final_button" id="message_button" name="message" value="message">
                     <img src="{% static 'booking/message-square.svg' %}">Message Landlord
-                </button>
+                </button> -->
                 {% else %}
                     <a class="btn btn-warning final_button" href="{% url 'booking:edit_listing' listing.id %}">Edit Listing</a>
                     <a class="btn btn-danger final_button" href="{% url 'booking:delete_listing' listing.id %}">Delete</a>
