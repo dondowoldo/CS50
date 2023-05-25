@@ -418,7 +418,9 @@ def my_followed_view(request):
                 ## QUERING DB FOR FILTERS IF SPECIFIED BY USER
                 filters = form.cleaned_data
                 query = Q()
-            
+                
+                query &= Q(watchlist__id__contains=request.user.id)
+                
                 if filters["location"] is not None:
                     query &= Q(location__contains=filters["location"])
                 
