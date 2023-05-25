@@ -15,7 +15,11 @@
     <div class="book_form_window">
         <div class="book_img_and_info">
             <div class="book_image_cont">
+                {% if not listing.imageurl %}
+                <img src="{% static 'booking/noimage.jpg' %}" style="max-width: 100%; border-radius: 1rem 0 0 0; object-fit: cover;">
+                {% else %}
                 <img src="{{ listing.imageurl }}" style="max-width: 100%; border-radius: 1rem 0 0 0; object-fit: cover;">
+                {% endif %}
             </div>
 
             <div class="book_info">

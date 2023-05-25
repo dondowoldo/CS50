@@ -329,8 +329,39 @@ def edit_listing(request, listing_id):
     
     else:
         return HttpResponseRedirect(reverse('booking:detail', args=[listing.id]))
+    
+@login_required
+def delete_listing(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
 
+    if request.method == "GET":
+        return render(request, "booking/remove.html", {
+            "listing": listing
+    })
 
+    else:
+        listing.delete()
+        return HttpResponseRedirect(reverse('booking:index'))
+    
+
+def my_bookings_view(request):
+    bookings = Booking.objects.filter(user=request.user)
+    
+    if request.method == "GET":
+        return render(request, "booking/my_bookings.html", {
+            "bookings": bookings
+        })
+    else:
+        listing_id = request.POST.get("cancel")
+        booked_dates = get_booking_dates(listing_id, request.user)
+        booking = Booking.objects.get(listing__id=listing_id, user=request.user)
+        listing = Listing.objects.get(id=listing_id)
+        for date in booked_dates:
+            listing.available_dates.add(AvailableDate.objects.get(date=date))
+        listing.save()
+        booking.delete()
+        return HttpResponseRedirect(reverse("booking:my_bookings")
+                                    )
 ## Helper func that gets 2 dates and returns a list of all dates in interval
 
 def get_initial_dates(start_date, end_date):
@@ -366,3 +397,10 @@ def get_unavailable_dates(selected_dates, available_dates):
             continue
         unavailable.append(date)
     return unavailable
+
+def get_booking_dates(listing_id, user):
+    booking = Booking.objects.get(listing__id=listing_id, user=user)
+    startdate = booking.startdate
+    enddate = booking.enddate
+    return get_initial_dates(startdate, enddate)
+

@@ -94,6 +94,7 @@
                                     <a class="btn btn-outline-secondary" id="details_button" href="{% url 'booking:detail' listing.id %}">Details</a>
                                 {% if user.is_authenticated and request.user == listing.creator %} 
                                     <a class="btn btn-warning" href="{% url 'booking:edit_listing' listing.id %}">Edit Listing</a>
+                                    <a class="btn btn-danger" href="{% url 'booking:delete_listing' listing.id %}">Delete</a>
                                 {% else %}
                                     <a class="btn btn-outline-success" href="{% url 'booking:book' listing.id %}">Book Now!</a>  
                                 {% endif %}
@@ -101,6 +102,7 @@
                             </div>
                         </ul>
                     </div>
+                    {% if user.is_authenticated and request.user != listing.creator %}
                     <div class="footing">
                         <div class="card_creator">
                             <span class="footing_text"><i>{{ listing.creator }}</i></span>
@@ -112,6 +114,14 @@
                         <img class="icons" id="heart" src="{% static 'booking/heart_grey_24.svg' %}">
                     
                     </div>
+                    {% else %}
+                    <div class="footing">
+                        <div class="card_creator">
+                            <span class="footing_text"><i>{{ listing.creator }}</i></span>
+                        </div>
+                        <span class="footing_text"><i>{{ listing.date_created.date }}</i></span> 
+                    </div>
+                    {% endif %}
                 </div>
 
             </div>

@@ -89,6 +89,7 @@
                                 <li>
                                     <a class="btn btn-outline-secondary" id="details_button" href="{% url 'booking:detail' listing.id %}">Details</a>
                                     <a class="btn btn-warning" href="{% url 'booking:edit_listing' listing.id %}">Edit Listing</a>  
+                                    <a class="btn btn-danger" href="{% url 'booking:delete_listing' listing.id %}">Delete</a>
                                 </li>
                             </div>
                         </ul>
