@@ -122,6 +122,7 @@ def index(request):
             listing_id = request.POST.get("follow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.add(request.user)
+            messages.success(request, "You are now following " + listing.title)
             return HttpResponseRedirect(reverse("booking:index"))
         
         
@@ -129,6 +130,7 @@ def index(request):
             listing_id = request.POST.get("unfollow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.remove(request.user)
+            messages.warning(request, "You are no longer following " + listing.title)
             return HttpResponseRedirect(reverse("booking:index"))
         
         
@@ -154,8 +156,10 @@ def addProperty(request):
                 date_entry, created = AvailableDate.objects.get_or_create(date=mydate)
                 complete_form.available_dates.add(date_entry)
 
+            messages.success(request, complete_form.title + " successfully added.")
             return HttpResponseRedirect(reverse("booking:index"))
         else:
+            messages.error(request, "An error has occured.")
             return render(request, "booking/add.html", {
                 "form": form
             })
@@ -191,12 +195,14 @@ def detail_view(request, listing_id):
             listing_id = request.POST.get("follow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.add(request.user)
+            messages.success(request, "You are now following " + listing.title)
             return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))      
         
         elif request.POST.get("unfollow"):
             listing_id = request.POST.get("unfollow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.remove(request.user)
+            messages.warning(request, "You are no longer following " + listing.title)
             return HttpResponseRedirect(reverse("booking:detail", args=[listing.id]))
 
         else:
@@ -229,8 +235,10 @@ def comments_view(request, listing_id):
                 complete_comment.user = request.user
                 complete_comment.listing = listing
                 complete_comment.save()
+                messages.info(request, "Your comment has been added.")
                 return HttpResponseRedirect(reverse("booking:comments", args=[listing.id])) 
-            else: 
+            else:
+                messages.error(request, "An error has occured.")
                 return render(request, "booking/comments.html", {
                     "listing_id": listing.id,
                     "comment_form": comment_form,
@@ -280,6 +288,7 @@ def book_view(request, listing_id):
                     "unavailable": unavailable
                 })
             else:
+                messages.error(request, "An error has occured.")
                 return render(request, "booking/book.html", {
                     "listing": listing,
                     "form": form,
@@ -303,9 +312,10 @@ def book_view(request, listing_id):
                     complete_form.listing = listing
                     complete_form.total_price = price_total
                     complete_form.save()
-
+                    messages.success(request, "Booking successful!")
                     return HttpResponseRedirect(reverse("booking:index"))
                 else:
+                    messages.error(request, "An error has occured.")
                     return render(request, "booking/book.html", {
                         "listing": listing,
                         "form": form,
@@ -338,8 +348,6 @@ def edit_listing(request, listing_id):
         "price_per_night": listing.price_per_night,
         "imageurl": listing.imageurl,
         "location": listing.location,
-        # "availability_from": listing.availability_from,
-        # "availability_to": listing.availability_to,
         "description": listing.description
     })
 
@@ -355,6 +363,28 @@ def edit_listing(request, listing_id):
         })
     
     else:
+        former = EditProperty(request.POST)
+        if former.is_valid():
+            form = former.cleaned_data
+            listing.type = PropertyType.objects.get(type=form["type"])
+            listing.title = form["title"]
+            listing.price_per_night = form["price_per_night"]
+            listing.imageurl = form["imageurl"]
+            listing.location = form["location"]
+            listing.description = form["description"]
+            
+            geocode = geocoder.osm(form["location"])
+            listing.geolat = geocode.lat
+            listing.geolng = geocode.lng
+            
+            listing.save()
+            messages.success(request, "Details were amended successfully.")
+        else:
+            messages.error(request, "An error has occured")
+            return render(request, "booking/edit_listing.html", {
+                "form": former
+            } )
+        
         return HttpResponseRedirect(reverse('booking:detail', args=[listing.id]))
     
 @login_required
@@ -367,7 +397,11 @@ def delete_listing(request, listing_id):
     })
 
     else:
-        listing.delete()
+        if listing.creator == request.user:
+            listing.delete()
+            messages.warning(request, "Your listing has been removed.")
+        else:
+            messages.error(request, "You don't have permissions to delete this listing.")
         return HttpResponseRedirect(reverse('booking:index'))
     
 
@@ -388,18 +422,21 @@ def my_bookings_view(request):
                 listing.available_dates.add(AvailableDate.objects.get(date=date))
             listing.save()
             booking.delete()
+            messages.warning(request, "Your booking was cancelled.")
             return HttpResponseRedirect(reverse("booking:my_bookings"))
 
         elif request.POST.get("follow"):
             listing_id = request.POST.get("follow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.add(request.user)
+            messages.success(request, "You are now following " + listing.title)
             return HttpResponseRedirect(reverse("booking:my_bookings"))      
         
         elif request.POST.get("unfollow"):
             listing_id = request.POST.get("unfollow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.remove(request.user)
+            messages.warning(request, "You are no longer following " + listing.title)
             return HttpResponseRedirect(reverse("booking:my_bookings"))
 
 
@@ -453,12 +490,14 @@ def my_followed_view(request):
             listing_id = request.POST.get("follow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.add(request.user)
+            messages.success(request, "You are now following " + listing.title)
             return HttpResponseRedirect(reverse("booking:following"))      
         
         elif request.POST.get("unfollow"):
             listing_id = request.POST.get("unfollow")
             listing = Listing.objects.get(id=listing_id)
             listing.watchlist.remove(request.user)
+            messages.warning(request, "You are no longer following " + listing.title)
             return HttpResponseRedirect(reverse("booking:following"))
 
 
